@@ -60,7 +60,7 @@ promisePool(promiseProducer, concurrency, options)
 .then(function() {
   console.log('All promises resolved');
 }, function(error) {
-  console.log('Some promise rejected: + error.message);
+  console.log('Some promise rejected:' + error.message);
 });
 ```
 
