@@ -71,7 +71,7 @@ first assume we have this helper function that returns a promise for the given
 `value` after `time` milliseconds:
 
 ```js
-var delayValue = function(time) {
+var delayValue = function(value, time) {
   return new Promise(function(resolve, reject) {
     console.log('Resolving ' + value + ' in ' + time + ' ms');
     setTimeout(function() {
