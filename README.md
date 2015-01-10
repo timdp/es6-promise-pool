@@ -150,6 +150,7 @@ promisePool(promiseProducer, concurrency, options);
 
 ## Alternatives
 
+- [Async.js](https://github.com/caolan/async)
 - [Promise Pool](https://github.com/vilic/promise-pool)
 - [qlimit](https://www.npmjs.com/package/qlimit)
 
