@@ -1,5 +1,4 @@
 {
-  "browser":    true,
   "curly":      true,
   "eqeqeq":     true,
   "eqnull":     true,
@@ -10,5 +9,10 @@
   "trailing":   true,
   "undef":      true,
   "unused":     true,
-  "node":       true
+  "node":       true,
+  "globals": {
+    "mocha":    false,
+    "describe": false,
+    "it":       false
+  }
 }

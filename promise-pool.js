@@ -20,7 +20,15 @@
         return obj;
       }
     }
+    if (type !== 'object' || typeof obj.then !== 'function') {
+      obj = Promise.resolve(obj);
+    }
+    var called = false;
     return function() {
+      if (called) {
+        return null;
+      }
+      called = true;
       return obj;
     };
   };

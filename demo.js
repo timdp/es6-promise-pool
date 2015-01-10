@@ -75,7 +75,7 @@
 
   var supportsGenerators = function() {
     try {
-      eval('function* g(){}');
+      eval('(function*(){})()');
       return true;
     } catch (e) {
       return false;

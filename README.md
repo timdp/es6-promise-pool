@@ -1,10 +1,8 @@
-Promise Pool
-============
+# Promise Pool [![Build Status](https://travis-ci.org/timdp/es6-promise-pool.svg?branch=master)](https://travis-ci.org/timdp/es6-promise-pool)
 
 Runs `Promise`s in a pool that limits their maximum concurrency.
 
-Motivation
-----------
+## Motivation
 
 An ES6 `Promise` is a great way of handling asynchronous operations. The
 `Promise.all` function provides an easy interface to let a bunch of promises
@@ -23,8 +21,7 @@ The promises can be created in a just-in-time fashion. You essentially pass a
 function that produces a new promise every time it is called. On modern
 platforms, you can also use ES6 generator functions for this.
 
-Demo
-----
+## Demo
 
 ### Node.js
 
@@ -39,8 +36,7 @@ Add `--harmony` for generator support if you have Node.js version 0.11.
 
 See `demo.html`.
 
-Basic Usage
------------
+## Basic Usage
 
 ```js
 // On the Web, just leave out this line.
@@ -68,8 +64,7 @@ promisePool(promiseProducer, concurrency, options)
 });
 ```
 
-Producers
----------
+## Producers
 
 The `promisePool` function takes a variety of `Promise`-producing objects. Let's
 first assume we have this helper function that returns a promise for the given
@@ -129,8 +124,7 @@ promisePool(promiseProducer, 3)
 });
 ```
 
-Options
--------
+## Options
 
 The `options` object lets us provide additional callback function to listen for
 promise progress.
@@ -154,19 +148,16 @@ options.onreject = function(poolPromise, promise, error) {
 promisePool(promiseProducer, concurrency, options);
 ```
 
-Alternatives
-------------
+## Alternatives
 
 - [Promise Pool](https://github.com/vilic/promise-pool)
 - [qlimit](https://www.npmjs.com/package/qlimit)
 
-Author
-------
+## Author
 
 [Tim De Pauw](https://tmdpw.eu/)
 
-License
--------
+## License
 
 Copyright &copy; 2015 Tim De Pauw
 
