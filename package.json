@@ -1,0 +1,29 @@
+{
+  "name": "es6-promise-pool",
+  "version": "0.0.0",
+  "description": "Runs Promises in a pool that limits their maximum concurrency.",
+  "author": {
+    "name": "Tim De Pauw",
+    "url": "https://tmdpw.eu/"
+  },
+  "engines": {
+    "node": "0.11.x"
+  },
+  "main": "promise-pool.js",
+  "devDependencies": {
+    "console-stamp": "^0.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/timdp/es6-promise-pool"
+  },
+  "bugs": {
+    "url": "https://github.com/timdp/es6-promise-pool/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.githubusercontent.com/timdp/es6-promise-pool/master/LICENSE"
+    }
+  ]
+}
