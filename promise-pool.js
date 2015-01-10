@@ -43,7 +43,7 @@
       var failed = false;
       var proceed = function() {
         var promise;
-        while (size < concurrency && (promise = producer()) !== null) {
+        while (size < concurrency && !!(promise = producer())) {
           promise.then(function(result) {
             size--;
             if (!failed) {
