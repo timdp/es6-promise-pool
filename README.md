@@ -44,12 +44,18 @@ var promisePool = require('es6-promise-pool');
 
 // Can also be a generator. See below.
 var promiseProducer = function() {
+  // There's a 10% chance that we return null, indicating that there are no
+  // more promises left to process.
+  if (Math.floor(Math.random() * 10) === 0) {
+    return null;
+  }
+  // If we didn't return null, we pass a new promise to the pool.
   return new Promise(function(resolve, reject) {
     setTimeout(resolve, 1000);
   });
 };
 
-// The number of Promises to process simultaneously.
+// The number of promises to process simultaneously.
 var concurrency = 3;
 
 // See below.
@@ -60,7 +66,7 @@ promisePool(promiseProducer, concurrency, options)
 .then(function() {
   console.log('All promises resolved');
 }, function(error) {
-  console.log('Some promise rejected:' + error.message);
+  console.log('Some promise rejected: ' + error.message);
 });
 ```
 
@@ -96,7 +102,6 @@ var promiseProducer = function() {
     count++;
     return delayValue(count, 1000);
   } else {
-    // A value of null indicates that there aren't any promises remaining.
     return null;
   }
 };
