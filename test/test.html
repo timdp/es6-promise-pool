@@ -15,6 +15,12 @@
 </head>
 <body>
 <div id="mocha"></div>
-<script>mocha.run();</script>
+<script>
+if (window.mochaPhantomJS) {
+  mochaPhantomJS.run();
+} else {
+  mocha.run();
+}
+</script>
 </body>
 </html>

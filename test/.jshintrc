@@ -9,6 +9,7 @@
   "trailing":   true,
   "undef":      true,
   "unused":     true,
+  "browser":    true,
   "node":       true,
   "globals": {
     "mocha":    false,
