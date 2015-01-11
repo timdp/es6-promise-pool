@@ -4,8 +4,8 @@ Runs `Promise`s in a pool that limits their maximum concurrency.
 
 ## Motivation
 
-An ES6 `Promise` is a great way of handling asynchronous operations. The
-`Promise.all` function provides an easy interface to let a bunch of promises
+An ECMAScript 6 `Promise` is a great way of handling asynchronous operations.
+The `Promise.all` function provides an easy interface to let a bunch of promises
 settle concurrently.
 
 However, it's an all-or-nothing approach: all your promises get created
@@ -47,6 +47,8 @@ npm install --save es6-promise-pool
 // On the Web, just leave out this line.
 var promisePool = require('es6-promise-pool');
 
+var PromisePool = promisePool.PromisePool;
+
 // Can also be a generator. See below.
 var promiseProducer = function() {
   // There's a 10% chance that we return null, indicating that there are no
@@ -70,13 +72,15 @@ var promiseProducer = function() {
 // The number of promises to process simultaneously.
 var concurrency = 3;
 
-// See below.
-var options = {};
+// Create a pool.
+var pool = new PromisePool(promiseProducer, concurrency);
 
-// Create a pool promise and wait for it to settle.
-promisePool(promiseProducer, concurrency, options)
-.then(function() {
-  console.log('All promises resolved');
+// Start the pool.
+var poolPromise = pool.start();
+
+// Wait for the pool to settle.
+poolPromise.then(function() {
+  console.log('All promises fulfilled');
 }, function(error) {
   console.log('Some promise rejected: ' + error.message);
 });
@@ -84,7 +88,7 @@ promisePool(promiseProducer, concurrency, options)
 
 ## Producers
 
-The `promisePool` function takes a `Promise`-producing function as its first
+The `PromisePool` constructor takes a `Promise`-producing function as its first
 argument. Let's first assume that we have this helper function that returns a
 promise for the given `value` after `time` milliseconds:
 
@@ -103,9 +107,9 @@ var delayValue = function(value, time) {
 ### Function
 
 Now, let's use the helper function above to create five such promises, which
-each resolve after a second. Because of the `concurrency` of `3`, the first
-three promises will resolve after a second. Then, the remaining two will be
-processed and resolve after another second.
+are each fulfilled after a second. Because of the `concurrency` of `3`, the
+first three promises will be fulfilled after one second. Then, the remaining two
+will be processed and fulfilled after another second.
 
 ```js
 var count = 0;
@@ -118,7 +122,9 @@ var promiseProducer = function() {
   }
 };
 
-promisePool(promiseProducer, 3)
+var pool = new PromisePool(promiseProducer, 3);
+
+pool.start()
 .then(function() {
   console.log('Complete');
 });
@@ -135,34 +141,45 @@ var promiseProducer = function*() {
   }
 };
 
-promisePool(promiseProducer, 3)
+var pool = new PromisePool(promiseProducer, 3);
+
+pool.start()
 .then(function() {
   console.log('Complete');
 });
 ```
 
-## Options
+## Events
 
-The `options` object lets us provide additional callback functions to listen for
-promise progress.
-
-When a promise settles, either `options.onresolve` or `options.onreject` will be
-called. Both functions receive the pool promise (as returned by `promisePool`),
-the promise that settled, and either the resolved value or the `Error` that
-caused the rejection.
+We can also ask the promise pool to notify us when an individual promise is
+fulfilled or rejected. The pool fires `fulfilled` and `rejected` events exactly
+for this purpose.
 
 ```js
-var options = {};
+var pool = new PromisePool(promiseProducer, 3);
 
-options.onresolve = function(poolPromise, promise, result) {
-  console.log('Resolved: ' + result);
-};
+pool.addEventListener('fulfilled', function(event) {
+  // The event contains:
+  // - target:    the PromisePool itself;
+  // - data:
+  //   - promise: the Promise that got fulfilled;
+  //   - result:  the result of that Promise.
+  console.log('Fulfilled: ' + event.data.result);
+});
 
-options.onreject = function(poolPromise, promise, error) {
-  console.log('Rejected: ' + error.message);
-};
+pool.addEventListener('rejected', function(event) {
+  // The event contains:
+  // - target:    the PromisePool itself;
+  // - data:
+  //   - promise: the Promise that got rejected;
+  //   - error:   the Error for the rejection.
+  console.log('Rejected: ' + event.data.error.message);
+});
 
-promisePool(promiseProducer, concurrency, options);
+pool.start()
+.then(function() {
+  console.log('Complete');
+});
 ```
 
 ## Alternatives

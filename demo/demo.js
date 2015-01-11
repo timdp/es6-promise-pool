@@ -3,16 +3,16 @@
 
   var Promise = global.Promise || require('es6-promise').Promise;
 
-  var promisePool, loadProducer;
+  var PromisePool, loadProducer;
   if (typeof module !== 'undefined') {
     require('console-stamp')(console, '[HH:mm:ss.l]');
-    promisePool = require('../');
+    PromisePool = require('../').PromisePool;
     loadProducer = function(id) {
       var filename = './demo-' + id;
       return Promise.resolve(require(filename));
     };
   } else {
-    promisePool = global.promisePool;
+    PromisePool = global.promisePool.PromisePool;
     loadProducer = function(id) {
       return Promise.resolve(global._producers[id]);
     };
@@ -41,14 +41,14 @@
     console.error('Failed: %s: %s', id, err.message);
   };
 
-  var onResolve = function(poolPromise, promise, result) {
-    console.info('Got result: %s', result);
-    console.info('New pool size is %d', poolPromise.pool.size());
+  var onFulfilled = function(evt) {
+    console.info('Got result: %s', evt.data.result);
+    console.info('New pool size is %d', evt.target.size());
   };
 
-  var onReject = function(poolPromise, promise, error) {
-    console.error('Got error: %s', error.message);
-    console.info('New pool size is %d', poolPromise.pool.size());
+  var onRejected = function(evt) {
+    console.error('Got error: %s', evt.data.error.message);
+    console.info('New pool size is %d', evt.target.size());
   };
 
   var startDemo = function(newID) {
@@ -58,18 +58,16 @@
     return id;
   };
 
-  var opt = {
-    onresolve: onResolve,
-    onReject: onReject
-  };
-
   var runDemo = function(id) {
     return loadProducer(id)
     .then(function(func) {
       return func(getPromise);
     })
     .then(function(gen) {
-      return promisePool(gen, 3, opt);
+      var pool = new PromisePool(gen, 3);
+      pool.addEventListener('fulfilled', onFulfilled);
+      pool.addEventListener('rejected', onRejected);
+      return pool.start();
     });
   };
 
