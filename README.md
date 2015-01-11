@@ -131,7 +131,7 @@ promisePool(promiseProducer, 3)
 
 ## Options
 
-The `options` object lets us provide additional callback function to listen for
+The `options` object lets us provide additional callback functions to listen for
 promise progress.
 
 When a promise settles, either `options.onresolve` or `options.onreject` will be
