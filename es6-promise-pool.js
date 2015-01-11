@@ -58,6 +58,9 @@
   PromisePool.prototype.concurrency = function(value) {
     if (typeof value !== 'undefined') {
       this._concurrency = value;
+      if (this._resolve) {
+        this._proceed();
+      }
     }
     return this._concurrency;
   };

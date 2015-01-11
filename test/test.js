@@ -245,6 +245,45 @@
       return expect(pool.concurrency()).to.equal(5);
     });
 
+    it('should increase the pool size upon a concurrency increase', function() {
+      var size;
+      var cnt = 0;
+      var pool = new PromisePool(function() {
+        if (cnt++ < 10) {
+          return new Promise(function(resolve, reject) {
+            var res;
+            if (cnt === 2) {
+              res = function() {
+                pool.concurrency(10);
+                size = pool.size();
+                resolve();
+              };
+            } else {
+              res = resolve;
+            }
+            setTimeout(res, 0);
+          });
+        } else {
+          return null;
+        }
+      }, 3);
+      var poolPromise = pool.start();
+      var sizePromise = poolPromise.then(function() {
+        return size;
+      });
+      return expect(sizePromise).to.eventually.equal(10);
+    });
+
+    it('should not change the pool size of a finished pool', function() {
+      var pool = new PromisePool(Promise.resolve(), 3);
+      var poolPromise = pool.start();
+      var sizePromise = poolPromise.then(function() {
+        pool.concurrency(10);
+        return pool.size();
+      });
+      expect(sizePromise).to.eventually.equal(0);
+    });
+
     it('should throttle', function() {
       var maxPoolSize = 0;
       var cnt = 0;
