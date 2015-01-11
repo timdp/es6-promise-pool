@@ -49,24 +49,11 @@ var promisePool = require('es6-promise-pool');
 
 var PromisePool = promisePool.PromisePool;
 
-// Can also be a generator. See below.
 var promiseProducer = function() {
-  // There's a 10% chance that we return null, indicating that there are no
-  // more promises left to process.
-  if (Math.floor(Math.random() * 10) === 0) {
-    console.log('No more promises in pool');
-    return null;
-  }
-  // If we didn't return null, we pass a new promise to the pool.
-  var promisedValue = new Date().getTime();
-  console.log('Creating new promise for ' + promisedValue);
-  return new Promise(function(resolve, reject) {
-    setTimeout(function() {
-      console.log('Resolving promise: ' + promisedValue);
-      // See below for instructions on how to retrieve the value.
-      resolve(promisedValue);
-    }, 1000);
-  });
+  // Your code goes here.
+  // If there is work left to be done, return the next work item as a promise.
+  // Otherwise, return null to indicate that all promises have been created.
+  // Scroll down for an example.
 };
 
 // The number of promises to process simultaneously.
