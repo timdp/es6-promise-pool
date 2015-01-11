@@ -39,27 +39,33 @@
     var onReject = options.onreject || function() {};
     var producer = toProducer(source);
     var size = 0;
+    var consumed = false;
     var poolPromise = new Promise(function(resolve, reject) {
       var failed = false;
       var proceed = function() {
-        var promise;
-        while (size < concurrency && !!(promise = producer())) {
-          promise.then(function(result) {
-            size--;
-            if (!failed) {
-              onResolve(poolPromise, promise, result);
-              proceed();
-            }
-          }, function(err) {
-            if (!failed) {
-              failed = true;
-              onReject(poolPromise, promise, err);
-              reject(err);
-            }
-          });
-          size++;
+        if (!consumed) {
+          var promise;
+          while (size < concurrency && !!(promise = producer())) {
+            promise.then(function(result) {
+              size--;
+              if (!failed) {
+                onResolve(poolPromise, promise, result);
+                proceed();
+              }
+            }, function(err) {
+              if (!failed) {
+                failed = true;
+                onReject(poolPromise, promise, err);
+                reject(err);
+              }
+            });
+            size++;
+          }
+          if (!promise) {
+            consumed = true;
+          }
         }
-        if (size === 0) {
+        if (consumed && size === 0) {
           resolve();
         }
       };

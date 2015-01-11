@@ -139,6 +139,25 @@
       return expect(sizePromise).to.eventually.be.at.most(3);
     });
 
+    it('should not call the producer after terminating it', function() {
+      var maxCnt = 0;
+      var cnt = 0;
+      var poolPromise = promisePool(function() {
+        if (cnt++ === 3) {
+          return null;
+        } else {
+          maxCnt = Math.max(maxCnt, cnt);
+          return new Promise(function(resolve, reject) {
+            setTimeout(resolve, 10);
+          });
+        }
+      }, 1);
+      var cntPromise = poolPromise.then(function() {
+        return maxCnt;
+      });
+      return expect(cntPromise).to.eventually.equal(3);
+    });
+
     it('should call onresolve', function() {
       var arg = null;
       var res = 'test';
