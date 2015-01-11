@@ -250,17 +250,9 @@
       var pool = new PromisePool(function() {
         if (cnt++ < 10) {
           return new Promise(function(resolve, reject) {
-            var res;
-            if (cnt === 2) {
-              res = function() {
-                pool.concurrency(10);
-                size = pool.size();
-                resolve();
-              };
-            } else {
-              res = resolve;
-            }
-            setTimeout(res, 0);
+            pool.concurrency(10);
+            size = pool.size();
+            setTimeout(resolve, 0);
           });
         } else {
           return null;
@@ -270,7 +262,7 @@
       var sizePromise = poolPromise.then(function() {
         return size;
       });
-      return expect(sizePromise).to.eventually.equal(10);
+      return expect(sizePromise).to.eventually.equal(9);
     });
 
     it('should not change the pool size of a finished pool', function() {
