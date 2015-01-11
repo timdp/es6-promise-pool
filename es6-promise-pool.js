@@ -170,7 +170,6 @@
       listeners[eventType] = function(evt) {
         cb(evt.target, evt.data.promise, evt.data[eventKey]);
       };
-      delete options[optKey];
     }
   };
 
