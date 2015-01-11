@@ -55,6 +55,7 @@
     this._listeners = {};
     this._producerDone = false;
     this._size = 0;
+    this._promise = null;
     this._callbacks = null;
   };
 
@@ -73,18 +74,23 @@
   };
 
   PromisePool.prototype.active = function() {
-    return !!this._callbacks;
+    return !!this._promise;
+  };
+
+  PromisePool.prototype.promise = function() {
+    return this._promise;
   };
 
   PromisePool.prototype.start = function() {
     var that = this;
-    return new Promise(function(resolve, reject) {
+    this._promise = new Promise(function(resolve, reject) {
       that._callbacks = {
         reject: reject,
         resolve: resolve
       };
       that._proceed();
     });
+    return this._promise;
   };
 
   PromisePool.prototype.addEventListener = function(type, listener) {
@@ -119,6 +125,7 @@
     } else {
       this._callbacks.resolve();
     }
+    this._promise = null;
     this._callbacks = null;
   };
 
@@ -177,7 +184,7 @@
     if (options[optKey]) {
       var cb = options[optKey];
       listeners[eventType] = function(evt) {
-        cb(evt.target, evt.data.promise, evt.data[eventKey]);
+        cb(evt.target._promise, evt.data.promise, evt.data[eventKey]);
       };
     }
   };
@@ -195,9 +202,7 @@
     var pool = new PromisePool(source, concurrency, options);
     if (listeners) {
       for (var type in listeners) {
-        if (listeners.hasOwnProperty(type)) {
-          pool.addEventListener(type, listeners[type]);
-        }
+        pool.addEventListener(type, listeners[type]);
       }
     }
     return pool.start();

@@ -250,19 +250,21 @@
       var pool = new PromisePool(function() {
         if (cnt++ < 10) {
           return new Promise(function(resolve, reject) {
-            pool.concurrency(10);
-            size = pool.size();
+            if (cnt === 2) {
+              pool.concurrency(5);
+              size = pool.size();
+            }
             setTimeout(resolve, 0);
           });
         } else {
           return null;
         }
-      }, 3);
+      }, 1);
       var poolPromise = pool.start();
       var sizePromise = poolPromise.then(function() {
         return size;
       });
-      return expect(sizePromise).to.eventually.equal(9);
+      return expect(sizePromise).to.eventually.equal(5);
     });
 
     it('should not change the pool size of a finished pool', function() {
@@ -273,6 +275,64 @@
         return pool.size();
       });
       expect(sizePromise).to.eventually.equal(0);
+    });
+
+    it('should be inactive by default', function() {
+      var pool = new PromisePool(Promise.resolve(), 3);
+      expect(pool.active()).to.equal(false);
+    });
+
+    it('should be active while working', function() {
+      var called = false;
+      var pool = new PromisePool(function() {
+        if (called) {
+          return null;
+        }
+        called = true;
+        return new Promise(function(resolve, reject) {
+          setTimeout(resolve, 10);
+        });
+      }, 3);
+      pool.start();
+      expect(pool.active()).to.equal(true);
+    });
+
+    it('should be inactive after completion', function() {
+      var pool = new PromisePool(Promise.resolve(), 3);
+      var poolPromise = pool.start();
+      var activePromise = poolPromise.then(function() {
+        return pool.active();
+      });
+      expect(activePromise).to.eventually.equal(false);
+    });
+
+    it('should not expose a promise by default', function() {
+      var pool = new PromisePool(Promise.resolve(), 3);
+      expect(pool.promise()).to.not.exist;
+    });
+
+    it('should expose its promise while working', function() {
+      var called = false;
+      var pool = new PromisePool(function() {
+        if (called) {
+          return null;
+        }
+        called = true;
+        return new Promise(function(resolve, reject) {
+          setTimeout(resolve, 10);
+        });
+      }, 3);
+      var poolPromise = pool.start();
+      expect(pool.promise()).to.equal(poolPromise);
+    });
+
+    it('should not expose a promise after completion', function() {
+      var pool = new PromisePool(Promise.resolve(), 3);
+      var poolPromise = pool.start();
+      var promisePromise = poolPromise.then(function() {
+        return pool.promise();
+      });
+      expect(promisePromise).to.eventually.not.exist;
     });
 
     it('should throttle', function() {
@@ -420,13 +480,14 @@
         return prom;
       }, 1, {
         onresolve: function() {
-          arg = Array.prototype.slice.call(arguments, 1);
+          arg = Array.prototype.slice.call(arguments);
         }
       });
       var argPromise = poolPromise.then(function() {
         return arg;
       });
-      return expect(argPromise).to.eventually.deep.equal([prom, res]);    
+      return expect(argPromise).to.eventually.deep.equal(
+        [poolPromise, prom, res]);
     });
 
     it('should call onreject', function() {
@@ -446,7 +507,7 @@
         return prom;
       }, 1, {
         onreject: function() {
-          arg = Array.prototype.slice.call(arguments, 1);
+          arg = Array.prototype.slice.call(arguments);
         }
       });
       var argPromise = poolPromise.then(function() {
@@ -454,7 +515,8 @@
       }, function() {
         return arg;
       });
-      return expect(argPromise).to.eventually.deep.equal([prom, err]);    
+      return expect(argPromise).to.eventually.deep.equal(
+        [poolPromise, prom, err]);
     });
   });
 })(this);
