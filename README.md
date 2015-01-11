@@ -21,6 +21,14 @@ The promises can be created in a just-in-time fashion. You essentially pass a
 function that produces a new promise every time it is called. On modern
 platforms, you can also use ES6 generator functions for this.
 
+## Compatibility
+
+This module can be used both under *Node.js* (version 0.10 and up) and on the
+*Web*. In both cases, your platform needs to have the `Promise` prototype
+available. You can use
+[ES6-Promise](https://github.com/jakearchibald/es6-promise) as a polyfill; it
+is used internally as well.
+
 ## Demo
 
 ### Node.js
