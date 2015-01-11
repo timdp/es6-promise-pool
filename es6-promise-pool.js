@@ -191,10 +191,7 @@
 
   var createPool = function(source, concurrency, options) {
     // Legacy API: options.onresolve and options.onreject
-    var listeners;
-    if (options) {
-      listeners = modernizeOptions(options);
-    }
+    var listeners = options ? modernizeOptions(options) : null;
     var pool = new PromisePool(source, concurrency, options);
     if (listeners) {
       for (var type in listeners) {
