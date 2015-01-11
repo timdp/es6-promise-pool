@@ -1,20 +1,19 @@
 (function(global) {
   'use strict';
 
-  var Promise = global.Promise || require('es6-promise').Promise;
+  var promisePool, Promise, PromisePool, chai, expect;
 
-  var chai, promisePool;
   if (typeof module !== 'undefined') {
+    promisePool = require('../');
     chai = require('chai');
     chai.use(require('chai-as-promised'));
-    promisePool = require('../');
   } else {
-    chai = global.chai;
     promisePool = global.promisePool;
+    chai = global.chai;
   }
-
-  var PromisePool = promisePool.PromisePool;
-  var expect = chai.expect;
+  Promise = promisePool.Promise;
+  PromisePool = promisePool.PromisePool;
+  expect = chai.expect;
 
   var supportsGenerators = (function() {
     try {

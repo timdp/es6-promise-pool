@@ -1,22 +1,25 @@
 (function(global) {
   'use strict';
 
-  var Promise = global.Promise || require('es6-promise').Promise;
+  var Promise, PromisePool;
 
-  var PromisePool, loadProducer;
+  var promisePool, loadProducer;
   if (typeof module !== 'undefined') {
     require('console-stamp')(console, '[HH:mm:ss.l]');
-    PromisePool = require('../').PromisePool;
+    promisePool = require('../');
     loadProducer = function(id) {
       var filename = './demo-' + id;
       return Promise.resolve(require(filename));
     };
   } else {
-    PromisePool = global.promisePool.PromisePool;
+    promisePool = global.promisePool;
     loadProducer = function(id) {
       return Promise.resolve(global._producers[id]);
     };
   }
+
+  Promise = promisePool.Promise;
+  PromisePool = promisePool.PromisePool;
 
   var id = 0;
   var cnt = 0;

@@ -24,10 +24,8 @@ platforms, you can also use ES6 generator functions for this.
 ## Compatibility
 
 This module can be used both under **Node.js** (version 0.10 and up) and on the
-**Web**. In both cases, your platform needs to have the `Promise` prototype
-available. You can use
-[ES6-Promise](https://github.com/jakearchibald/es6-promise) as a polyfill; it
-is used internally as well.
+**Web**. If your platform does not have a `Promise` implementation, it will be
+polyfilled by [ES6-Promise](https://github.com/jakearchibald/es6-promise).
 
 ## Installation
 
@@ -44,7 +42,8 @@ npm install --save es6-promise-pool
 ## Usage
 
 ```js
-// On the Web, just leave out this line.
+// On the Web, leave out these two lines and use the script tags above instead.
+var Promise = require('es6-promise').Promise;
 var promisePool = require('es6-promise-pool');
 
 var PromisePool = promisePool.PromisePool;

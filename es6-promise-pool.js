@@ -198,7 +198,9 @@
     return pool.start();
   };
 
+  createPool.Promise = Promise;
   createPool.PromisePool = PromisePool;
+  createPool.PromisePoolEvent = PromisePoolEvent;
 
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = createPool;
