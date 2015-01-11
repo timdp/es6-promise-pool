@@ -23,12 +23,12 @@
 
   var getPromise = function() {
     return new Promise(function(resolve, reject) {
-      ++cnt;
+      var num = ++cnt;
       var delay = 500 + Math.floor(Math.random() * 500);
-      console.info('Resolving %s#%d in %d ms', id, cnt, delay);
+      console.info('Resolving %s#%d in %d ms', id, num, delay);
       setTimeout(function() {
-        console.info('Resolving: %s#%d', id, cnt);
-        resolve('result-' + id + '#' + cnt);
+        console.info('Resolving: %s#%d', id, num);
+        resolve('result-' + id + '#' + num);
       }, delay);
     });
   };
