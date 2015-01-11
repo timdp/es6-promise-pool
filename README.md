@@ -143,7 +143,7 @@ fulfilled or rejected. The pool fires `fulfilled` and `rejected` events exactly
 for this purpose.
 
 ```js
-var pool = new PromisePool(promiseProducer, 3);
+var pool = new PromisePool(promiseProducer, concurrency);
 
 pool.addEventListener('fulfilled', function(event) {
   // The event contains:
