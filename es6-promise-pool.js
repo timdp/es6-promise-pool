@@ -11,6 +11,17 @@
     };
   };
 
+  var promiseToProducer = function(promise) {
+    var called = false;
+    return function() {
+      if (called) {
+        return null;
+      }
+      called = true;
+      return promise;
+    };
+  };
+
   var toProducer = function(obj) {
     var type = typeof obj;
     if (type === 'function') {
@@ -23,14 +34,7 @@
     if (type !== 'object' || typeof obj.then !== 'function') {
       obj = Promise.resolve(obj);
     }
-    var called = false;
-    return function() {
-      if (called) {
-        return null;
-      }
-      called = true;
-      return obj;
-    };
+    return promiseToProducer(obj);
   };
 
   var PromisePoolEvent = function(target, type, data) {
@@ -51,14 +55,13 @@
     this._listeners = {};
     this._producerDone = false;
     this._size = 0;
-    this._resolve = null;
-    this._reject = null;
+    this._callbacks = null;
   };
 
   PromisePool.prototype.concurrency = function(value) {
     if (typeof value !== 'undefined') {
       this._concurrency = value;
-      if (this._resolve) {
+      if (this.active()) {
         this._proceed();
       }
     }
@@ -69,11 +72,17 @@
     return this._size;
   };
 
+  PromisePool.prototype.active = function() {
+    return !!this._callbacks;
+  };
+
   PromisePool.prototype.start = function() {
     var that = this;
     return new Promise(function(resolve, reject) {
-      that._resolve = resolve;
-      that._reject = reject;
+      that._callbacks = {
+        reject: reject,
+        resolve: resolve
+      };
       that._proceed();
     });
   };
@@ -106,16 +115,16 @@
 
   PromisePool.prototype._settle = function(error) {
     if (error) {
-      this._reject(error);
+      this._callbacks.reject(error);
     } else {
-      this._resolve();
+      this._callbacks.resolve();
     }
-    this._resolve = this._reject = null;
+    this._callbacks = null;
   };
 
   PromisePool.prototype._onPooledPromiseFulfilled = function(promise, result) {
     this._size--;
-    if (this._resolve) {
+    if (this.active()) {
       this._fireEvent('fulfilled', {
         promise: promise,
         result: result
@@ -126,7 +135,7 @@
 
   PromisePool.prototype._onPooledPromiseRejected = function(promise, error) {
     this._size--;
-    if (this._reject) {
+    if (this.active()) {
       this._fireEvent('rejected', {
         promise: promise,
         error: error
