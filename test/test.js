@@ -154,9 +154,7 @@
         }
       }, 3);
       var sizePromise = new Promise(function(resolve, reject) {
-        setTimeout(function() {
-          resolve(poolPromise.pool.size());
-        }, 0);
+        resolve(poolPromise.pool.size());
       });
       return expect(sizePromise).to.eventually.equal(3);
     });
