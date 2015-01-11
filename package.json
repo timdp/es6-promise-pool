@@ -45,6 +45,9 @@
     "test": "mocha",
     "cover": "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha"
   },
+  "files": [
+    "es6-promise-pool.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/timdp/es6-promise-pool"
