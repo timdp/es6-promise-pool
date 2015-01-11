@@ -29,22 +29,19 @@ available. You can use
 [ES6-Promise](https://github.com/jakearchibald/es6-promise) as a polyfill; it
 is used internally as well.
 
-## Demo
-
-### Node.js
+## Installation
 
 ```bash
-npm install
-node demo.js
+npm install --save es6-promise-pool
 ```
 
-Add `--harmony` for generator support if you have Node.js version 0.11.
+```html
+<script src="es6-promise.js"></script>
+<script>ES6Promise.polyfill();</script>
+<script src="es6-promise-pool.js"></script>
+```
 
-### Web
-
-See `demo.html`.
-
-## Basic Usage
+## Usage
 
 ```js
 // On the Web, just leave out this line.
@@ -87,9 +84,9 @@ promisePool(promiseProducer, concurrency, options)
 
 ## Producers
 
-The `promisePool` function takes a variety of `Promise`-producing objects. Let's
-first assume we have this helper function that returns a promise for the given
-`value` after `time` milliseconds:
+The `promisePool` function takes a `Promise`-producing function as its first
+argument. Let's first assume that we have this helper function that returns a
+promise for the given `value` after `time` milliseconds:
 
 ```js
 var delayValue = function(value, time) {

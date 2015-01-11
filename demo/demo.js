@@ -6,9 +6,9 @@
   var promisePool, loadProducer;
   if (typeof module !== 'undefined') {
     require('console-stamp')(console, '[HH:mm:ss.l]');
-    promisePool = require('./');
+    promisePool = require('../');
     loadProducer = function(id) {
-      var filename = './demos/' + id + '.js';
+      var filename = './demo-' + id;
       return Promise.resolve(require(filename));
     };
   } else {

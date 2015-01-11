@@ -6,7 +6,7 @@
     "name": "Tim De Pauw",
     "url": "https://tmdpw.eu/"
   },
-  "main": "promise-pool.js",
+  "main": "es6-promise-pool.js",
   "keywords": [
     "promise",
     "promises",
