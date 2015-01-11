@@ -63,6 +63,64 @@
       return expect(poolPromise).to.be.rejectedWith(Error, 'test');    
     });
 
+    it('should not resolve after a rejection', function() {
+      var reached = false;
+      var cnt = 0;
+      var poolPromise = promisePool(function() {
+        switch (cnt++) {
+          case 0:
+            return new Promise(function(resolve, reject) {
+              reject(new Error('test'));
+            });
+          case 1:
+            return new Promise(function(resolve, reject) {
+              setTimeout(function() {
+                resolve();
+              }, 10);
+            });
+          default:
+            return null;
+        }
+      }, 3, {
+        onresolve: function() {
+          reached = true;
+        }
+      });
+      var valuePromise = poolPromise['catch'](function() {
+        return reached;
+      });
+      return expect(valuePromise).to.eventually.equal(false);
+    });
+
+    it('should not reject again after a rejection', function() {
+      var rejections = 0;
+      var cnt = 0;
+      var poolPromise = promisePool(function() {
+        switch (cnt++) {
+          case 0:
+            return new Promise(function(resolve, reject) {
+              reject(new Error('test'));
+            });
+          case 1:
+            return new Promise(function(resolve, reject) {
+              setTimeout(function() {
+                reject();
+              }, 10);
+            });
+          default:
+            return null;
+        }
+      }, 3, {
+        onreject: function() {
+          rejections++;
+        }
+      });
+      var valuePromise = poolPromise['catch'](function() {
+        return rejections;
+      });
+      return expect(valuePromise).to.eventually.equal(1);
+    });
+
     it('should handle delayed promises', function() {
       var called = false;
       var poolPromise = promisePool(function() {
