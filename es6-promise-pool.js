@@ -1,7 +1,15 @@
-(function(global) {
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['es6-promise'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('es6-promise'));
+  } else {
+    root.promisePool = factory(root.ES6Promise);
+  }
+})(this, function(es6promise) {
   'use strict';
 
-  var Promise = global.Promise || require('es6-promise').Promise;
+  var Promise = es6promise.Promise;
 
   var generatorFunctionToProducer = function(gen) {
     gen = gen();
@@ -212,9 +220,5 @@
   createPool.PromisePool = PromisePool;
   createPool.PromisePoolEvent = PromisePoolEvent;
 
-  if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = createPool;
-  } else {
-    global.promisePool = createPool;
-  }
-})(this);
+  return createPool;
+});

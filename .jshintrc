@@ -1,5 +1,6 @@
 {
   "browser":    true,
+  "node":       true,
   "curly":      true,
   "eqeqeq":     true,
   "eqnull":     true,
@@ -10,5 +11,7 @@
   "trailing":   true,
   "undef":      true,
   "unused":     true,
-  "node":       true
+  "globals": {
+    "define":   false
+  }
 }
