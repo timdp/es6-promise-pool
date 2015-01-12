@@ -1,9 +1,9 @@
 [Tt]humbs.db
 *.DS_Store
 
-/node_modules/
+node_modules/
 npm-debug.log
 
-/bower_components/
+bower_components/
 
-/coverage/
+coverage/
