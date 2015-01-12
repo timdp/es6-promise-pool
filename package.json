@@ -4,7 +4,7 @@
   "description": "Runs Promises in a pool that limits their maximum concurrency.",
   "author": {
     "name": "Tim De Pauw",
-    "url": "https://tmdpw.eu/"
+    "url": "https://tmdpw.eu"
   },
   "main": "es6-promise-pool.js",
   "keywords": [

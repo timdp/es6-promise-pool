@@ -1,0 +1,50 @@
+{
+  "name": "es6-promise-pool",
+  "main": "es6-promise-pool.js",
+  "homepage": "https://github.com/timdp/es6-promise-pool",
+  "authors": [
+    "Tim De Pauw (https://tmdpw.eu)"
+  ],
+  "description": "Runs Promises in a pool that limits their maximum concurrency.",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "promise",
+    "promises",
+    "promises-a",
+    "promises-aplus",
+    "future",
+    "futures",
+    "deferred",
+    "deferreds",
+    "generator",
+    "generators",
+    "async",
+    "await",
+    "flow control",
+    "pool",
+    "queue",
+    "throttle",
+    "es6",
+    "browser",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "es6-promise": "~2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/timdp/es6-promise-pool"
+  }
+}
