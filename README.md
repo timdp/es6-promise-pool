@@ -1,4 +1,4 @@
-# Promise Pool [![Build Status](https://travis-ci.org/timdp/es6-promise-pool.svg?branch=master)](https://travis-ci.org/timdp/es6-promise-pool)
+# Promise Pool [![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/es6-promise-pool) [![Build Status](https://img.shields.io/travis/timdp/es6-promise-pool.svg)](https://travis-ci.org/timdp/es6-promise-pool) [![Coverage Status](https://img.shields.io/coveralls/timdp/es6-promise-pool.svg)](https://coveralls.io/r/timdp/es6-promise-pool)
 
 Runs `Promise`s in a pool that limits their maximum concurrency.
 
