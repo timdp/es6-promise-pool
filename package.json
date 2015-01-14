@@ -46,7 +46,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test":       "npm run mocha && npm run ph && node --version | grep -qv ^v0\\.11\\. || npm run coveralls",
+    "test":       "npm run mocha && npm run ph && node --version | grep -q ^v0\\.10\\. || npm run coveralls",
     "mocha":      "node --harmony node_modules/mocha/bin/_mocha test/test.js",
     "ph":         "node --harmony node_modules/mocha-phantomjs/bin/mocha-phantomjs test/test.html",
     "cover":      "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec",
