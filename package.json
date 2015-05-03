@@ -49,9 +49,9 @@
   "scripts": {
     "test": "npm run standard && npm run mocha && node --version | grep -qv ^v0\\.12\\. || npm run coveralls",
     "standard": "node node_modules/standard/bin/cmd.js",
-    "mocha": "node node_modules/mocha/bin/_mocha",
-    "cover": "node node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec",
-    "coveralls": "node node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && node node_modules/coveralls/bin/coveralls.js < coverage/lcov.info && rm -rf coverage"
+    "mocha": "node --harmony node_modules/mocha/bin/_mocha",
+    "cover": "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec",
+    "coveralls": "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && node node_modules/coveralls/bin/coveralls.js < coverage/lcov.info && rm -rf coverage"
   },
   "files": [
     "es6-promise-pool.js"
