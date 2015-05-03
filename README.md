@@ -136,9 +136,9 @@ var promiseProducer = function* () {
 var pool = new PromisePool(promiseProducer, 3)
 
 pool.start()
-.then(function () {
-  console.log('Complete')
-})
+  .then(function () {
+    console.log('Complete')
+  })
 ```
 
 ## Events
