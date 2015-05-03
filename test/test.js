@@ -25,36 +25,34 @@
   })();
 
   describe('PromisePool', function() {
-    it('should throw if concurrency is a string', function() {
+    it('throws if concurrency is a string', function() {
       expect(function() {
         new PromisePool(function() {}, '10');
       }).to.throw(Error);
     });
 
-    it('should throw if concurrency is too low', function() {
+    it('throws if concurrency is too low', function() {
       expect(function() {
         new PromisePool(function() {}, 0);
       }).to.throw(Error);
     });
 
-    it('should support not providing options', function() {
+    it('does not require options', function() {
       var pool = new PromisePool('test', 1);
       return expect(pool).to.be.an('object');
     });
 
-    it('should return a promise', function() {
-      it('should take a non-function as its producer', function() {
-        var poolPromise = new PromisePool('test', 1).start();
-        return expect(poolPromise).to.be.a(Promise);
-      });
+    it('returns a promise', function() {
+      var poolPromise = new PromisePool('test', 1).start();
+      return expect(poolPromise).to.be.an.instanceof(Promise);
     });
 
-    it('should take a non-function as its producer', function() {
+    it('takes a non-function as its producer', function() {
       var poolPromise = new PromisePool('test', 1).start();
       return expect(poolPromise).to.be.fulfilled;
     });
 
-    it('should take a single promise as its producer', function() {
+    it('takes a single promise as its producer', function() {
       var poolPromise = new PromisePool(Promise.resolve(), 1).start();
       return expect(poolPromise).to.be.fulfilled;
     });
@@ -65,20 +63,20 @@
         'resolve();' +
         '});' +
         '})');
-      it('should take a generator as its producer', function() {
+      it('takes a generator as its producer', function() {
         var poolPromise = new PromisePool(gen, 1).start();
         return expect(poolPromise).to.be.fulfilled;
       });
     }
 
-    it('should add an event listener', function() {
+    it('adds an event listener', function() {
       var pool = new PromisePool(Promise.resolve(), 1);
       var listener = function() {};
       pool.addEventListener('fulfilled', listener);
       expect(pool._listeners.fulfilled.indexOf(listener)).to.be.at.least(0);
     });
 
-    it('should not add the same event listener twice', function() {
+    it('does not add the same event listener twice', function() {
       var pool = new PromisePool(Promise.resolve(), 1);
       var listener = function() {};
       pool.addEventListener('fulfilled', listener);
@@ -86,7 +84,7 @@
       expect(pool._listeners.fulfilled.length).to.equal(1);
     });
 
-    it('should remove an event listener', function() {
+    it('removes an event listener', function() {
       var pool = new PromisePool(Promise.resolve(), 1);
       var listener = function() {};
       pool.addEventListener('fulfilled', listener);
@@ -94,7 +92,7 @@
       expect(pool._listeners.fulfilled.indexOf(listener)).to.be.below(0);
     });
 
-    it('should remove a listener for a nonexistent event', function() {
+    it('removes a listener for a nonexistent event', function() {
       var pool = new PromisePool(Promise.resolve(), 1);
       var listener = function() {};
       expect(function() {
@@ -102,7 +100,7 @@
       }).not.to.throw(Error);
     });
 
-    it('should support removing a nonexistent event listener', function() {
+    it('removes a nonexistent event listener', function() {
       var pool = new PromisePool(Promise.resolve(), 1);
       var listener = function() {};
       pool.addEventListener('fulfilled', listener);
@@ -112,32 +110,32 @@
       }).not.to.throw(Error);
     });
 
-    it('should resolve an empty pool', function() {
+    it('resolves an empty pool', function() {
       var poolPromise = new PromisePool(function() {
         return null;
       }, 1).start();
       return expect(poolPromise).to.eventually.be.fulfilled;
     });
 
-    it('should forward a rejection', function() {
+    it('forwards a rejection', function() {
       var poolPromise = new PromisePool(function() {
         return new Promise(function(resolve, reject) {
           reject(new Error('test'));
         });
       }, 1).start();
-      return expect(poolPromise).to.eventually.be.rejectedWith(Error, 'test');    
+      return expect(poolPromise).to.eventually.be.rejectedWith(Error, 'test');
     });
 
-    it('should always provide an error upon rejection', function() {
+    it('provides an error upon rejection', function() {
       var poolPromise = new PromisePool(function() {
         return new Promise(function(resolve, reject) {
           reject();
         });
       }, 1).start();
-      return expect(poolPromise).to.eventually.be.rejectedWith(Error);  
+      return expect(poolPromise).to.eventually.be.rejectedWith(Error);
     });
 
-    it('should not resolve after a rejection', function() {
+    it('resolves after a rejection', function() {
       var reached = false;
       var cnt = 0;
       var pool = new PromisePool(function() {
@@ -166,7 +164,7 @@
       return expect(valuePromise).to.eventually.equal(false);
     });
 
-    it('should not reject again after a rejection', function() {
+    it('only rejects once', function() {
       var rejections = 0;
       var cnt = 0;
       var pool = new PromisePool(function() {
@@ -195,7 +193,7 @@
       return expect(valuePromise).to.eventually.equal(1);
     });
 
-    it('should handle delayed promises', function() {
+    it('handles delayed promises', function() {
       var called = false;
       var poolPromise = new PromisePool(function() {
         if (called) {
@@ -206,10 +204,10 @@
           setTimeout(resolve, 10);
         });
       }, 1).start();
-      return expect(poolPromise).to.be.fulfilled;    
+      return expect(poolPromise).to.be.fulfilled;
     });
 
-    it('should report the pool size', function() {
+    it('reports the pool size', function() {
       var cnt = 0;
       var pool = new PromisePool(function() {
         if (cnt++ < 5) {
@@ -227,7 +225,7 @@
       return expect(sizePromise).to.eventually.equal(3);
     });
 
-    it('should report the concurrency', function() {
+    it('reports the concurrency', function() {
       var pool = new PromisePool(function() {
         return null;
       }, 5);
@@ -235,7 +233,7 @@
       return expect(pool.concurrency()).to.equal(5);
     });
 
-    it('should update the concurrency', function() {
+    it('updates the concurrency', function() {
       var pool = new PromisePool(function() {
         return null;
       }, 1);
@@ -244,7 +242,7 @@
       return expect(pool.concurrency()).to.equal(5);
     });
 
-    it('should increase the pool size upon a concurrency increase', function() {
+    it('increases the pool size upon a concurrency increase', function() {
       var size;
       var cnt = 0;
       var pool = new PromisePool(function() {
@@ -267,7 +265,7 @@
       return expect(sizePromise).to.eventually.equal(5);
     });
 
-    it('should not change the pool size of a finished pool', function() {
+    it('does not change the pool size of a finished pool', function() {
       var pool = new PromisePool(Promise.resolve(), 3);
       var poolPromise = pool.start();
       var sizePromise = poolPromise.then(function() {
@@ -277,12 +275,12 @@
       expect(sizePromise).to.eventually.equal(0);
     });
 
-    it('should be inactive by default', function() {
+    it('is inactive by default', function() {
       var pool = new PromisePool(Promise.resolve(), 3);
       expect(pool.active()).to.equal(false);
     });
 
-    it('should be active while working', function() {
+    it('is active while working', function() {
       var called = false;
       var pool = new PromisePool(function() {
         if (called) {
@@ -297,7 +295,7 @@
       expect(pool.active()).to.equal(true);
     });
 
-    it('should be inactive after completion', function() {
+    it('is inactive after completion', function() {
       var pool = new PromisePool(Promise.resolve(), 3);
       var poolPromise = pool.start();
       var activePromise = poolPromise.then(function() {
@@ -306,12 +304,12 @@
       expect(activePromise).to.eventually.equal(false);
     });
 
-    it('should not expose a promise by default', function() {
+    it('does not expose a promise by default', function() {
       var pool = new PromisePool(Promise.resolve(), 3);
       expect(pool.promise()).to.not.exist;
     });
 
-    it('should expose its promise while working', function() {
+    it('exposes its promise while working', function() {
       var called = false;
       var pool = new PromisePool(function() {
         if (called) {
@@ -326,7 +324,7 @@
       expect(pool.promise()).to.equal(poolPromise);
     });
 
-    it('should not expose a promise after completion', function() {
+    it('does not expose a promise after completion', function() {
       var pool = new PromisePool(Promise.resolve(), 3);
       var poolPromise = pool.start();
       var promisePromise = poolPromise.then(function() {
@@ -335,7 +333,7 @@
       expect(promisePromise).to.eventually.not.exist;
     });
 
-    it('should throttle', function() {
+    it('throttles', function() {
       var maxPoolSize = 0;
       var cnt = 0;
       var pool = new PromisePool(function() {
@@ -357,7 +355,7 @@
       return expect(sizePromise).to.eventually.be.at.most(3);
     });
 
-    it('should not call the producer after terminating it', function() {
+    it('does not call the producer after terminating it', function() {
       var maxCnt = 0;
       var cnt = 0;
       var poolPromise = new PromisePool(function() {
@@ -376,7 +374,7 @@
       return expect(cntPromise).to.eventually.equal(3);
     });
 
-    it('should fire a fulfilled event', function() {
+    it('fires a fulfilled event', function() {
       var arg = null;
       var res = 'test';
       var prom = new Promise(function(resolve, reject) {
@@ -410,7 +408,7 @@
       return expect(argPromise).to.eventually.deep.equal(expEvent);
     });
 
-    it('should fire a rejected event', function() {
+    it('fires a rejected event', function() {
       var arg = null;
       var err = new Error('test');
       var prom = new Promise(function(resolve, reject) {
@@ -446,7 +444,7 @@
       return expect(argPromise).to.eventually.deep.equal(expEvent);
     });
 
-    it('should catch event listener errors', function() {
+    it('catches event listener errors', function() {
       var called = false;
       var pool = new PromisePool(Promise.resolve(), 1);
       pool.addEventListener('fulfilled', function() {
@@ -458,12 +456,12 @@
   });
 
   describe('promisePool', function() {
-    it('should support not providing options', function() {
+    it('does not require options', function() {
       var poolPromise = promisePool('test', 1);
       return expect(poolPromise).to.be.an('object');
     });
 
-    it('should call onresolve', function() {
+    it('calls onresolve', function() {
       var arg = null;
       var res = 'test';
       var prom = new Promise(function(resolve, reject) {
@@ -490,7 +488,7 @@
         [poolPromise, prom, res]);
     });
 
-    it('should call onreject', function() {
+    it('calls onreject', function() {
       var arg = null;
       var err = new Error('test');
       var prom = new Promise(function(resolve, reject) {
