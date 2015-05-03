@@ -1,5 +1,3 @@
-/* jshint esnext:true */
-
 (function (global) {
   'use strict'
 
