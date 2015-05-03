@@ -70,6 +70,8 @@
         var poolPromise = new PromisePool(gen, 1).start()
         return expect(poolPromise).to.be.fulfilled
       })
+    } else {
+      it('takes a generator as its producer')
     }
 
     it('adds an event listener', function () {
