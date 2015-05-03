@@ -1,4 +1,4 @@
-# es6-promise-pool [![npm](https://img.shields.io/npm/v/es6-promise-pool.svg)](https://www.npmjs.com/package/es6-promise-pool) ![Bower](https://img.shields.io/bower/v/es6-promise-pool.svg) [![Build Status](https://img.shields.io/travis/timdp/es6-promise-pool.svg)](https://travis-ci.org/timdp/es6-promise-pool) [![Coverage Status](https://img.shields.io/coveralls/timdp/es6-promise-pool.svg)](https://coveralls.io/r/timdp/es6-promise-pool)
+# es6-promise-pool [![npm](https://img.shields.io/npm/v/es6-promise-pool.svg)](https://www.npmjs.com/package/es6-promise-pool) ![Bower](https://img.shields.io/bower/v/es6-promise-pool.svg) [![Build Status](https://img.shields.io/travis/timdp/es6-promise-pool.svg)](https://travis-ci.org/timdp/es6-promise-pool) [![Coverage Status](https://img.shields.io/coveralls/timdp/es6-promise-pool.svg)](https://coveralls.io/r/timdp/es6-promise-pool) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
 Runs `Promise`s in a pool that limits their maximum concurrency.
 
