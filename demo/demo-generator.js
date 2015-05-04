@@ -2,7 +2,7 @@
   'use strict'
 
   var producer = function (getPromise) {
-    return function* () {
+    return function * () {
       for (var i = 0; i < 10; ++i) {
         yield getPromise()
       }

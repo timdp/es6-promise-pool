@@ -71,8 +71,7 @@
   ],
   "standard": {
     "ignore": [
-      "bower_components/**",
-      "demo/demo-generator.js"
+      "bower_components/**"
     ]
   }
 }
