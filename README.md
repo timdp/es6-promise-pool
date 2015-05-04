@@ -127,7 +127,7 @@ pool.start()
 We can achieve the same result with ECMAScript 6 generator functions.
 
 ```js
-var promiseProducer = function* () {
+var promiseProducer = function * () {
   for (var count = 1; count <= 5; count++) {
     yield delayValue(count, 1000)
   }
