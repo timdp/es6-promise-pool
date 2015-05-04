@@ -1,20 +1,18 @@
-/* jshint esnext:true */
+(function (global) {
+  'use strict'
 
-(function(global) {
-  'use strict';
-
-  var producer = function(getPromise) {
-    return function*() {
+  var producer = function (getPromise) {
+    return function* () {
       for (var i = 0; i < 10; ++i) {
-        yield getPromise();
+        yield getPromise()
       }
-    };
-  };
+    }
+  }
 
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = producer;
+    module.exports = producer
   } else {
-    global._producers = global._producers || {};
-    global._producers['generator'] = producer;
+    global._producers = global._producers || {}
+    global._producers['generator'] = producer
   }
-})(this);
+})(this)

@@ -1,6 +1,6 @@
 {
   "name": "es6-promise-pool",
-  "version": "0.2.5",
+  "version": "0.2.8",
   "description": "Runs Promises in a pool that limits their maximum concurrency.",
   "author": {
     "name": "Tim De Pauw",
@@ -40,17 +40,18 @@
     "mocha": "^2.1.0",
     "mocha-lcov-reporter": "0.0.1",
     "mocha-phantomjs": "^3.5.2",
-    "phantomjs": "^1.9.13"
+    "phantomjs": "^1.9.13",
+    "standard": "^3.7.3"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test":       "npm run mocha && npm run ph && node --version | grep -q ^v0\\.10\\. || npm run coveralls",
-    "mocha":      "node --harmony node_modules/mocha/bin/_mocha test/test.js",
-    "ph":         "node --harmony node_modules/mocha-phantomjs/bin/mocha-phantomjs test/test.html",
-    "cover":      "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec",
-    "coveralls":  "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info && rm -rf ./coverage"
+    "test": "npm run standard && npm run mocha && ( node --version | grep -qv ^v0\\.12\\. || npm run coveralls )",
+    "standard": "node node_modules/standard/bin/cmd.js",
+    "mocha": "node --harmony node_modules/mocha/bin/_mocha",
+    "cover": "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec",
+    "coveralls": "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && node node_modules/coveralls/bin/coveralls.js < coverage/lcov.info && rm -rf coverage"
   },
   "files": [
     "es6-promise-pool.js"
@@ -67,5 +68,11 @@
       "type": "MIT",
       "url": "https://raw.githubusercontent.com/timdp/es6-promise-pool/master/LICENSE"
     }
-  ]
+  ],
+  "standard": {
+    "ignore": [
+      "bower_components/**",
+      "demo/demo-generator.js"
+    ]
+  }
 }
