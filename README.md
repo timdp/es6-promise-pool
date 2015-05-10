@@ -131,7 +131,7 @@ var promiseProducer = function * () {
   for (var count = 1; count <= 5; count++) {
     yield delayValue(count, 1000)
   }
-};
+}
 
 var pool = new PromisePool(promiseProducer, 3)
 
