@@ -41,15 +41,13 @@ bower install --save es6-promise-pool
 
 ```html
 <script src="es6-promise.js"></script>
-<script>ES6Promise.polyfill()</script>
 <script src="es6-promise-pool.js"></script>
 ```
 
 ## Usage
 
 ```js
-// On the Web, leave out these two lines and use the script tags above instead.
-var Promise = require('es6-promise').Promise
+// On the Web, leave out this line and use the script tags above instead.
 var promisePool = require('es6-promise-pool')
 
 var PromisePool = promisePool.PromisePool

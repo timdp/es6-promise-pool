@@ -11,7 +11,7 @@
 })(this, function (es6promise) {
   'use strict'
 
-  var Promise = es6promise.Promise
+  es6promise.polyfill()
 
   var generatorFunctionToProducer = function (gen) {
     gen = gen()
