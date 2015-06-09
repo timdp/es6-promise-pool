@@ -47,7 +47,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "npm run standard && npm run mocha && ( node --version | grep -qv ^v0\\.12\\. || npm run coveralls )",
+    "test": "npm run standard && npm run mocha",
     "standard": "node node_modules/standard/bin/cmd.js",
     "mocha": "node --harmony node_modules/mocha/bin/_mocha",
     "cover": "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec",

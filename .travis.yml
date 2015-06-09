@@ -1,4 +1,9 @@
 language: node_js
-node_js:
-  - '0.10'
-  - '0.12'
+matrix:
+  include:
+    - node_js: iojs
+    - node_js: '0.10'
+    - node_js: '0.12'
+      env: COVERALLS=1
+after_success:
+  - '[[ "$COVERALLS" ]] && npm run coveralls'
