@@ -63,12 +63,7 @@
   "bugs": {
     "url": "https://github.com/timdp/es6-promise-pool/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://raw.githubusercontent.com/timdp/es6-promise-pool/master/LICENSE"
-    }
-  ],
+  "license": "MIT",
   "standard": {
     "ignore": [
       "bower_components/**"
