@@ -13,6 +13,35 @@
 
   es6promise.polyfill()
 
+  var EventTarget = function () {
+    this._listeners = {}
+  }
+
+  EventTarget.prototype.addEventListener = function (type, listener) {
+    this._listeners[type] = this._listeners[type] || []
+    if (this._listeners[type].indexOf(listener) < 0) {
+      this._listeners[type].push(listener)
+    }
+  }
+
+  EventTarget.prototype.removeEventListener = function (type, listener) {
+    if (this._listeners[type]) {
+      var p = this._listeners[type].indexOf(listener)
+      if (p >= 0) {
+        this._listeners[type].splice(p, 1)
+      }
+    }
+  }
+
+  EventTarget.prototype.dispatchEvent = function (evt) {
+    if (this._listeners[evt.type] && this._listeners[evt.type].length) {
+      var listeners = this._listeners[evt.type].slice()
+      for (var i = 0, l = listeners.length; i < l; ++i) {
+        listeners[i].call(this, evt)
+      }
+    }
+  }
+
   var generatorFunctionToProducer = function (gen) {
     gen = gen()
     return function () {
@@ -54,6 +83,7 @@
   }
 
   var PromisePool = function (source, concurrency, options) {
+    EventTarget.call(this)
     if (typeof concurrency !== 'number' ||
       Math.floor(concurrency) !== concurrency ||
       concurrency < 1) {
@@ -62,12 +92,13 @@
     this._producer = toProducer(source)
     this._concurrency = concurrency
     this._options = options || {}
-    this._listeners = {}
     this._producerDone = false
     this._size = 0
     this._promise = null
     this._callbacks = null
   }
+  PromisePool.prototype = new EventTarget()
+  PromisePool.prototype.constructor = EventTarget
 
   PromisePool.prototype.concurrency = function (value) {
     if (typeof value !== 'undefined') {
@@ -103,30 +134,8 @@
     return this._promise
   }
 
-  PromisePool.prototype.addEventListener = function (type, listener) {
-    this._listeners[type] = this._listeners[type] || []
-    if (this._listeners[type].indexOf(listener) < 0) {
-      this._listeners[type].push(listener)
-    }
-  }
-
-  PromisePool.prototype.removeEventListener = function (type, listener) {
-    if (this._listeners[type]) {
-      var p = this._listeners[type].indexOf(listener)
-      if (p >= 0) {
-        this._listeners[type].splice(p, 1)
-      }
-    }
-  }
-
   PromisePool.prototype._fireEvent = function (type, data) {
-    if (this._listeners[type] && this._listeners[type].length) {
-      var evt = new PromisePoolEvent(this, type, data)
-      var listeners = this._listeners[type].slice()
-      for (var i = 0, l = listeners.length; i < l; ++i) {
-        listeners[i].call(this, evt)
-      }
-    }
+    this.dispatchEvent(new PromisePoolEvent(this, type, data))
   }
 
   PromisePool.prototype._settle = function (error) {
