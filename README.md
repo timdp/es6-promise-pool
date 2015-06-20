@@ -125,18 +125,16 @@ pool.start()
 We can achieve the same result with ECMAScript 6 generator functions.
 
 ```js
-var promiseProducer = function * () {
-  for (var count = 1; count <= 5; count++) {
+const promiseProducer = function * () {
+  for (let count = 1; count <= 5; count++) {
     yield delayValue(count, 1000)
   }
 }
 
-var pool = new PromisePool(promiseProducer, 3)
+const pool = new PromisePool(promiseProducer, 3)
 
 pool.start()
-  .then(function () {
-    console.log('Complete')
-  })
+  .then(() => console.log('Complete'))
 ```
 
 ## Events
