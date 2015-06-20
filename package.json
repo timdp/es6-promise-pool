@@ -1,6 +1,6 @@
 {
   "name": "es6-promise-pool",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Runs Promises in a pool that limits their maximum concurrency.",
   "author": {
     "name": "Tim De Pauw",
