@@ -172,9 +172,15 @@ pool.start()
 
 ## Alternatives
 
-- [Async.js](https://github.com/caolan/async)
-- [Promise Pool](https://github.com/vilic/promise-pool)
-- [qlimit](https://www.npmjs.com/package/qlimit)
+- Vilic Vane's [Promise Pool](https://github.com/vilic/promise-pool) offers a
+  similar API.
+- [Bluebird](https://github.com/petkaantonov/bluebird) includes
+  [`Promise.map()`](https://github.com/petkaantonov/bluebird/blob/master/API.md#mapfunction-mapper--object-options---promise),
+  which takes a `concurrency` option.
+- With [Q](https://github.com/kriskowal/q), you can use
+  [qlimit](https://github.com/suprememoocow/qlimit).
+- [Async](https://github.com/caolan/async) does not use promises, but offers a
+  [`queue()`](https://github.com/caolan/async#queueworker-concurrency) function.
 
 ## Author
 
