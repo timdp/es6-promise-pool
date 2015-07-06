@@ -197,36 +197,8 @@
     }
   }
 
-  var modernizeOption = function (options, listeners, optKey, eventType, eventKey) {
-    if (options[optKey]) {
-      var cb = options[optKey]
-      listeners[eventType] = function (evt) {
-        cb(evt.target._promise, evt.data.promise, evt.data[eventKey])
-      }
-    }
+  return {
+    PromisePool: PromisePool,
+    PromisePoolEvent: PromisePoolEvent
   }
-
-  var modernizeOptions = function (options) {
-    var listeners = {}
-    modernizeOption(options, listeners, 'onresolve', 'fulfilled', 'result')
-    modernizeOption(options, listeners, 'onreject', 'rejected', 'error')
-    return listeners
-  }
-
-  var createPool = function (source, concurrency, options) {
-    // Legacy API: options.onresolve and options.onreject
-    var listeners = options ? modernizeOptions(options) : null
-    var pool = new PromisePool(source, concurrency, options)
-    if (listeners) {
-      for (var type in listeners) {
-        pool.addEventListener(type, listeners[type])
-      }
-    }
-    return pool.start()
-  }
-
-  createPool.PromisePool = PromisePool
-  createPool.PromisePoolEvent = PromisePoolEvent
-
-  return createPool
 })
