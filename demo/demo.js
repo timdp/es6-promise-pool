@@ -1,7 +1,7 @@
 (function (global) {
   'use strict'
 
-  var Promise, PromisePool
+  var PromisePool
 
   var promisePool, loadProducer
   if (typeof module !== 'undefined') {
@@ -17,8 +17,6 @@
       return Promise.resolve(global._producers[id])
     }
   }
-
-  Promise = promisePool.Promise
   PromisePool = promisePool.PromisePool
 
   var id = 0

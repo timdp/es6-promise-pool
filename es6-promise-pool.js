@@ -2,16 +2,14 @@
 
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define(['es6-promise'], factory)
+    define([], factory)
   } else if (typeof exports === 'object') {
-    module.exports = factory(require('es6-promise'))
+    module.exports = factory()
   } else {
-    root.promisePool = factory(root.ES6Promise)
+    root.promisePool = factory()
   }
-})(this, function (es6promise) {
+})(this, function () {
   'use strict'
-
-  es6promise.polyfill()
 
   var EventTarget = function () {
     this._listeners = {}
@@ -227,7 +225,6 @@
     return pool.start()
   }
 
-  createPool.Promise = Promise
   createPool.PromisePool = PromisePool
   createPool.PromisePoolEvent = PromisePoolEvent
 

@@ -7,7 +7,7 @@
     require('es6-promise').polyfill()
   }
 
-  var promisePool, Promise, PromisePool, chai, expect
+  var promisePool, PromisePool, chai, expect
 
   if (typeof module !== 'undefined') {
     promisePool = require('../')
@@ -17,7 +17,6 @@
     promisePool = global.promisePool
     chai = global.chai
   }
-  Promise = promisePool.Promise
   PromisePool = promisePool.PromisePool
   expect = chai.expect
 

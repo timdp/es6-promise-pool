@@ -25,9 +25,9 @@ platforms, you can also use ES6 generator functions for this.
 
 ## Compatibility
 
-This module can be used both under **Node.js** (version 0.10 and up) and on the
-**Web**. If your platform does not have a `Promise` implementation, it will be
-polyfilled by [ES6-Promise](https://github.com/jakearchibald/es6-promise).
+This module can be used both under **Node.js** and on the **Web**. If your
+platform does not have a native `Promise` implementation, you can use a polyfill
+such as [ES6-Promise](https://github.com/jakearchibald/es6-promise).
 
 ## Installation
 
@@ -40,14 +40,13 @@ bower install --save es6-promise-pool
 ```
 
 ```html
-<script src="es6-promise.js"></script>
 <script src="es6-promise-pool.js"></script>
 ```
 
 ## Usage
 
 ```js
-// On the Web, leave out this line and use the script tags above instead.
+// On the Web, leave out this line and use the script tag above instead.
 var promisePool = require('es6-promise-pool')
 
 var PromisePool = promisePool.PromisePool
@@ -169,6 +168,13 @@ pool.start()
     console.log('Complete')
   })
 ```
+
+## Upgrading
+
+Since version 2.0.0, this module does not depend on
+[ES6-Promise](https://github.com/jakearchibald/es6-promise) anymore. If you
+want to support platforms without a native `Promise` implementation, please
+load a polyfill first.
 
 ## Alternatives
 

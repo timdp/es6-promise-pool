@@ -40,9 +40,6 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "es6-promise": "~2.0.1"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/timdp/es6-promise-pool"
