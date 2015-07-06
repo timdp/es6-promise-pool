@@ -485,8 +485,9 @@
 
   describe('promisePool', function () {
     it('does not require options', function () {
-      var poolPromise = promisePool('test', 1)
-      return expect(poolPromise).to.be.an('object')
+      return expect(function () {
+        promisePool('test', 1)
+      }).to.not.throw
     })
 
     it('calls onresolve', function () {
