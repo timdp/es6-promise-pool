@@ -172,12 +172,12 @@
 
   PromisePool.prototype._trackPromise = function (promise) {
     var that = this
-    promise.then(function (result) {
-      that._onPooledPromiseFulfilled(promise, result)
-    }, function (error) {
-      that._onPooledPromiseRejected(promise, error)
-    })
-      ['catch'](function (err) {
+    promise
+      .then(function (result) {
+        that._onPooledPromiseFulfilled(promise, result)
+      }, function (error) {
+        that._onPooledPromiseRejected(promise, error)
+      })['catch'](function (err) {
         that._settle(new Error('Promise processing failed: ' + err))
       })
   }
