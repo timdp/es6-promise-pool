@@ -3,6 +3,10 @@
 (function (global) {
   'use strict'
 
+  if (typeof exports === 'object') {
+    require('es6-promise').polyfill()
+  }
+
   var promisePool, Promise, PromisePool, chai, expect
 
   if (typeof module !== 'undefined') {
