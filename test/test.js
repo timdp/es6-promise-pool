@@ -27,6 +27,63 @@
     }
   })()
 
+  describe('es6-promise-pool', function () {
+    it('exports PromisePool', function () {
+      expect(PromisePool.PromisePool).to.equal(PromisePool)
+    })
+
+    it('exports PromisePoolEvent', function () {
+      expect(PromisePool.PromisePoolEvent).to.be.a('function')
+    })
+  })
+
+  describe('EventTarget', function () {
+    describe('#addEventListener()', function () {
+      it('adds an event listener', function () {
+        var pool = new PromisePool(Promise.resolve(), 1)
+        var listener = function () {}
+        pool.addEventListener('fulfilled', listener)
+        expect(pool._listeners.fulfilled.indexOf(listener)).to.be.at.least(0)
+      })
+
+      it('does not add the same event listener twice', function () {
+        var pool = new PromisePool(Promise.resolve(), 1)
+        var listener = function () {}
+        pool.addEventListener('fulfilled', listener)
+        pool.addEventListener('fulfilled', listener)
+        expect(pool._listeners.fulfilled.length).to.equal(1)
+      })
+    })
+
+    describe('#removeEventListener()', function () {
+      it('removes an event listener', function () {
+        var pool = new PromisePool(Promise.resolve(), 1)
+        var listener = function () {}
+        pool.addEventListener('fulfilled', listener)
+        pool.removeEventListener('fulfilled', listener)
+        expect(pool._listeners.fulfilled.indexOf(listener)).to.be.below(0)
+      })
+
+      it('removes a listener for a nonexistent event', function () {
+        var pool = new PromisePool(Promise.resolve(), 1)
+        var listener = function () {}
+        expect(function () {
+          pool.removeEventListener('foo', listener)
+        }).not.to.throw(Error)
+      })
+
+      it('supports removing a nonexistent event listener', function () {
+        var pool = new PromisePool(Promise.resolve(), 1)
+        var listener = function () {}
+        pool.addEventListener('fulfilled', listener)
+        pool.removeEventListener('fulfilled', listener)
+        expect(function () {
+          pool.removeEventListener('fulfilled', listener)
+        }).not.to.throw(Error)
+      })
+    })
+  })
+
   describe('PromisePool', function () {
     describe('constructor', function () {
       it('accepts a non-function as the producer', function () {
@@ -119,51 +176,6 @@
           return maxCnt
         })
         return expect(cntPromise).to.eventually.equal(3)
-      })
-    })
-
-    describe('#addEventListener()', function () {
-      it('adds an event listener', function () {
-        var pool = new PromisePool(Promise.resolve(), 1)
-        var listener = function () {}
-        pool.addEventListener('fulfilled', listener)
-        expect(pool._listeners.fulfilled.indexOf(listener)).to.be.at.least(0)
-      })
-
-      it('does not add the same event listener twice', function () {
-        var pool = new PromisePool(Promise.resolve(), 1)
-        var listener = function () {}
-        pool.addEventListener('fulfilled', listener)
-        pool.addEventListener('fulfilled', listener)
-        expect(pool._listeners.fulfilled.length).to.equal(1)
-      })
-    })
-
-    describe('#removeEventListener()', function () {
-      it('removes an event listener', function () {
-        var pool = new PromisePool(Promise.resolve(), 1)
-        var listener = function () {}
-        pool.addEventListener('fulfilled', listener)
-        pool.removeEventListener('fulfilled', listener)
-        expect(pool._listeners.fulfilled.indexOf(listener)).to.be.below(0)
-      })
-
-      it('removes a listener for a nonexistent event', function () {
-        var pool = new PromisePool(Promise.resolve(), 1)
-        var listener = function () {}
-        expect(function () {
-          pool.removeEventListener('foo', listener)
-        }).not.to.throw(Error)
-      })
-
-      it('supports removing a nonexistent event listener', function () {
-        var pool = new PromisePool(Promise.resolve(), 1)
-        var listener = function () {}
-        pool.addEventListener('fulfilled', listener)
-        pool.removeEventListener('fulfilled', listener)
-        expect(function () {
-          pool.removeEventListener('fulfilled', listener)
-        }).not.to.throw(Error)
       })
     })
 
@@ -480,6 +492,36 @@
         })
         var poolPromise = pool.start()
         return expect(poolPromise).to.eventually.be.rejected
+      })
+    })
+  })
+
+  describe('PromisePoolEvent', function () {
+    describe('#constructor', function () {
+      var PromisePoolEvent = PromisePool.PromisePoolEvent
+
+      it('stores the event target', function () {
+        var target = {}
+        var type = 'test'
+        var data = {}
+        var evt = new PromisePoolEvent(target, type, data)
+        expect(evt.target).to.equal(target)
+      })
+
+      it('stores the event type', function () {
+        var target = {}
+        var type = 'test'
+        var data = {}
+        var evt = new PromisePoolEvent(target, type, data)
+        expect(evt.type).to.equal(type)
+      })
+
+      it('stores the event data', function () {
+        var target = {}
+        var type = 'test'
+        var data = {}
+        var evt = new PromisePoolEvent(target, type, data)
+        expect(evt.data).to.equal(data)
       })
     })
   })
