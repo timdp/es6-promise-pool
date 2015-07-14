@@ -497,7 +497,7 @@
   })
 
   describe('PromisePoolEvent', function () {
-    describe('#constructor', function () {
+    describe('constructor', function () {
       var PromisePoolEvent = PromisePool.PromisePoolEvent
 
       it('stores the event target', function () {
