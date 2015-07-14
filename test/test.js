@@ -7,17 +7,15 @@
     require('es6-promise').polyfill()
   }
 
-  var promisePool, PromisePool, chai, expect
-
+  var PromisePool, chai, expect
   if (typeof module !== 'undefined') {
-    promisePool = require('../')
+    PromisePool = require('../')
     chai = require('chai')
     chai.use(require('chai-as-promised'))
   } else {
-    promisePool = global.promisePool
+    PromisePool = global.PromisePool
     chai = global.chai
   }
-  PromisePool = promisePool.PromisePool
   expect = chai.expect
 
   var supportsGenerators = (function () {

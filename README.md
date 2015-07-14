@@ -47,9 +47,7 @@ bower install --save es6-promise-pool
 
 ```js
 // On the Web, leave out this line and use the script tag above instead.
-var promisePool = require('es6-promise-pool')
-
-var PromisePool = promisePool.PromisePool
+var PromisePool = require('es6-promise-pool')
 
 var promiseProducer = function () {
   // Your code goes here.

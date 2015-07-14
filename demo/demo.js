@@ -1,23 +1,20 @@
 (function (global) {
   'use strict'
 
-  var PromisePool
-
-  var promisePool, loadProducer
+  var PromisePool, loadProducer
   if (typeof module !== 'undefined') {
     require('console-stamp')(console, '[HH:mm:ss.l]')
-    promisePool = require('../')
+    PromisePool = require('../')
     loadProducer = function (id) {
       var filename = './demo-' + id
       return Promise.resolve(require(filename))
     }
   } else {
-    promisePool = global.promisePool
+    PromisePool = global.PromisePool
     loadProducer = function (id) {
       return Promise.resolve(global._producers[id])
     }
   }
-  PromisePool = promisePool.PromisePool
 
   var id = 0
   var cnt = 0

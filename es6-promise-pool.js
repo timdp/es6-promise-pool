@@ -6,7 +6,9 @@
   } else if (typeof exports === 'object') {
     module.exports = factory()
   } else {
-    root.promisePool = factory()
+    root.PromisePool = factory()
+    // Legacy API
+    root.promisePool = root.PromisePool
   }
 })(this, function () {
   'use strict'
@@ -197,8 +199,7 @@
     }
   }
 
-  return {
-    PromisePool: PromisePool,
-    PromisePoolEvent: PromisePoolEvent
-  }
+  PromisePool.PromisePoolEvent = PromisePoolEvent
+
+  return PromisePool
 })
