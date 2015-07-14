@@ -83,8 +83,8 @@
   var PromisePool = function (source, concurrency, options) {
     EventTarget.call(this)
     if (typeof concurrency !== 'number' ||
-      Math.floor(concurrency) !== concurrency ||
-      concurrency < 1) {
+        Math.floor(concurrency) !== concurrency ||
+        concurrency < 1) {
       throw new Error('Invalid concurrency')
     }
     this._producer = toProducer(source)
@@ -184,7 +184,7 @@
     if (!this._producerDone) {
       var promise
       while (this._size < this._concurrency &&
-        !!(promise = this._producer.call(this))) {
+          !!(promise = this._producer.call(this))) {
         this._size++
         this._trackPromise(promise)
       }
