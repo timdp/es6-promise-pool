@@ -200,6 +200,8 @@
   }
 
   PromisePool.PromisePoolEvent = PromisePoolEvent
+  // Legacy API
+  PromisePool.PromisePool = PromisePool
 
   return PromisePool
 })
