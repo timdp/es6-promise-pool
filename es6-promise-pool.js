@@ -185,8 +185,7 @@
   PromisePool.prototype._proceed = function () {
     if (!this._producerDone) {
       var promise
-      while (this._size < this._concurrency &&
-          !!(promise = this._producer.call(this))) {
+      while (this._size < this._concurrency && (promise = this._producer())) {
         this._size++
         this._trackPromise(promise)
       }
