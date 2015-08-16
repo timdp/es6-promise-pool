@@ -247,7 +247,7 @@
           pool.concurrency(10)
           return pool.size()
         })
-        expect(sizePromise).to.eventually.equal(0)
+        return expect(sizePromise).to.eventually.equal(0)
       })
     })
 
@@ -278,7 +278,7 @@
         var activePromise = poolPromise.then(function () {
           return pool.active()
         })
-        expect(activePromise).to.eventually.equal(false)
+        return expect(activePromise).to.eventually.equal(false)
       })
     })
 
@@ -309,7 +309,7 @@
         var promisePromise = poolPromise.then(function () {
           return pool.promise()
         })
-        expect(promisePromise).to.eventually.not.exist
+        return expect(promisePromise).to.eventually.not.exist
       })
     })
 
