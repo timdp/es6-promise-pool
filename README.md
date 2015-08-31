@@ -182,7 +182,7 @@ load a polyfill first.
   [`Promise.map()`](https://github.com/petkaantonov/bluebird/blob/master/API.md#mapfunction-mapper--object-options---promise),
   which takes a `concurrency` option.
 - Similarly, [λ (a.k.a. contra)](https://github.com/bevacqua/contra) has
-  [`λ.concurrent`](https://github.com/bevacqua/contra#λconcurrenttasks-cap-done)
+  [`λ.concurrent()`](https://github.com/bevacqua/contra#λconcurrenttasks-cap-done)
   with the optional `cap` parameter.
 - With [Q](https://github.com/kriskowal/q), you can use
   [qlimit](https://github.com/suprememoocow/qlimit).
