@@ -54,10 +54,7 @@
   "files": [
     "es6-promise-pool.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/timdp/es6-promise-pool"
-  },
+  "repository": "timdp/es6-promise-pool",
   "bugs": {
     "url": "https://github.com/timdp/es6-promise-pool/issues"
   },
