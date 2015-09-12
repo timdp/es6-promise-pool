@@ -131,10 +131,8 @@
 
     describe('#start()', function () {
       it('returns a promise', function () {
-        it('takes a non-function as its producer', function () {
-          var poolPromise = new PromisePool('test', 1).start()
-          return expect(poolPromise).to.be.a(Promise)
-        })
+        var poolPromise = new PromisePool('test', 1).start()
+        return expect(poolPromise).to.be.an.instanceof(Promise)
       })
 
       it('throttles', function () {
