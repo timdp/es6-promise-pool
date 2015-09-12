@@ -174,6 +174,14 @@ Since version 2.0.0, this module does not depend on
 want to support platforms without a native `Promise` implementation, please
 load a polyfill first.
 
+If you prefer not to polyfill the global `Promise` for whatever reason, you can
+also pass your `Promise` class as an option instead:
+
+```js
+var ES6Promise = require('es6-promise').Promise // or another implementation
+var pool = new PromisePool(promiseProducer, concurrency, {promise: ES6Promise})
+```
+
 ## Alternatives
 
 - Vilic Vane's [Promise Pool](https://github.com/vilic/promise-pool) offers a

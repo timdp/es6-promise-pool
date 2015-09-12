@@ -61,7 +61,7 @@
     }
   }
 
-  var toProducer = function (obj) {
+  var toProducer = function (obj, Promise) {
     var type = typeof obj
     if (type === 'function') {
       if (obj.constructor && obj.constructor.name === 'GeneratorFunction') {
@@ -89,9 +89,10 @@
         concurrency < 1) {
       throw new Error('Invalid concurrency')
     }
-    this._producer = toProducer(source)
     this._concurrency = concurrency
     this._options = options || {}
+    this._options.promise = this._options.promise || Promise
+    this._producer = toProducer(source, this._options.promise)
     this._producerDone = false
     this._size = 0
     this._promise = null
@@ -124,6 +125,7 @@
 
   PromisePool.prototype.start = function () {
     var that = this
+    var Promise = this._options.promise
     this._promise = new Promise(function (resolve, reject) {
       that._callbacks = {
         reject: reject,

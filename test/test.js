@@ -7,14 +7,17 @@
     require('es6-promise').polyfill()
   }
 
-  var PromisePool, chai, expect
-  if (typeof module !== 'undefined') {
+  var PromisePool, chai, expect, PinkiePromise
+  if (typeof exports === 'object') {
     PromisePool = require('../')
     chai = require('chai')
     chai.use(require('chai-as-promised'))
+    PinkiePromise = require('pinkie')
   } else {
     PromisePool = global.PromisePool
     chai = global.chai
+    // TODO Load browserified pinkie
+    PinkiePromise = null
   }
   expect = chai.expect
 
@@ -134,6 +137,14 @@
         var poolPromise = new PromisePool('test', 1).start()
         return expect(poolPromise).to.be.an.instanceof(Promise)
       })
+
+      if (PinkiePromise) {
+        it('returns a custom promise', function () {
+          var options = {promise: PinkiePromise}
+          var poolPromise = new PromisePool('test', 1, options).start()
+          return expect(poolPromise).to.be.an.instanceof(PinkiePromise)
+        })
+      }
 
       it('throttles', function () {
         var maxPoolSize = 0
