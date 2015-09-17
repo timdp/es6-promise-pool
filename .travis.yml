@@ -4,7 +4,7 @@ matrix:
     - node_js: '0.10'
     - node_js: '0.12'
     - node_js: iojs
-    - node_js: '4.0'
+    - node_js: 4
       env: COVERALLS=1
 after_success:
   - '[[ "$COVERALLS" ]] && npm run coveralls'
