@@ -110,7 +110,7 @@
     this._callbacks = null
   }
   PromisePool.prototype = new EventTarget()
-  PromisePool.prototype.constructor = EventTarget
+  PromisePool.prototype.constructor = PromisePool
 
   PromisePool.prototype.concurrency = function (value) {
     if (typeof value !== 'undefined') {
