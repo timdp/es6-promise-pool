@@ -6,7 +6,7 @@ Runs `Promise`s in a pool that limits their maximum concurrency.
 
 ## Motivation
 
-An ECMAScript 6 `Promise` is a great way of handling asynchronous operations.
+An ECMAScript 2015 `Promise` is a great way to handle asynchronous operations.
 The `Promise.all` function provides an easy interface to let a bunch of promises
 settle concurrently.
 
@@ -20,8 +20,8 @@ waiting for any number of promises to settle, while imposing an upper bound on
 the number of simultaneously executing promises.
 
 The promises can be created in a just-in-time fashion. You essentially pass a
-function that produces a new promise every time it is called. On modern
-platforms, you can also use ES6 generator functions for this.
+function that produces a new promise every time it is called. Alternatively, you
+can pass an ES2015 iterator, meaning you can also use generator functions.
 
 ## Compatibility
 
@@ -117,22 +117,29 @@ pool.start()
   })
 ```
 
-### Generator
+### Iterator
 
-We can achieve the same result with ECMAScript 6 generator functions.
+We can achieve the same result with ECMAScript 2015 iterators. Since ES2015
+generator functions return such an iterator, we can make the example above a lot
+prettier:
 
 ```js
-const promiseProducer = function * () {
+const generatePromises = function * () {
   for (let count = 1; count <= 5; count++) {
     yield delayValue(count, 1000)
   }
 }
 
-const pool = new PromisePool(promiseProducer, 3)
+const promiseIterator = generatePromises()
+const pool = new PromisePool(promiseIterator, 3)
 
 pool.start()
   .then(() => console.log('Complete'))
 ```
+
+It's also possible to pass a generator function directly. In that case, it will
+be invoked with no arguments and the resulting iterator will be used. This
+feature will however be removed in version 3.
 
 ## Events
 

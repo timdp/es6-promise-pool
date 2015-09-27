@@ -42,38 +42,47 @@
     }
   }
 
-  var generatorFunctionToProducer = function (gen) {
-    gen = gen()
-    return function () {
-      var res = gen.next()
-      return res.done ? null : res.value
-    }
+  var isGenerator = function (func) {
+    return (typeof func.constructor === 'function' &&
+      func.constructor.name === 'GeneratorFunction')
   }
 
-  var promiseToProducer = function (promise) {
-    var called = false
-    return function () {
-      if (called) {
-        return null
+  var functionToIterator = function (func) {
+    return {
+      next: function () {
+        var promise = func()
+        return promise ? {value: promise} : {done: true}
       }
-      called = true
-      return promise
     }
   }
 
-  var toProducer = function (obj, Promise) {
+  var promiseToIterator = function (promise) {
+    var called = false
+    return {
+      next: function () {
+        if (called) {
+          return {done: true}
+        }
+        called = true
+        return {value: promise}
+      }
+    }
+  }
+
+  var toIterator = function (obj, Promise) {
     var type = typeof obj
-    if (type === 'function') {
-      if (obj.constructor && obj.constructor.name === 'GeneratorFunction') {
-        return generatorFunctionToProducer(obj)
-      } else {
+    if (type === 'object') {
+      if (typeof obj.next === 'function') {
         return obj
       }
+      if (typeof obj.then === 'function') {
+        return promiseToIterator(obj)
+      }
     }
-    if (type !== 'object' || typeof obj.then !== 'function') {
-      obj = Promise.resolve(obj)
+    if (type === 'function') {
+      return isGenerator(obj) ? obj() : functionToIterator(obj)
     }
-    return promiseToProducer(obj)
+    return promiseToIterator(Promise.resolve(obj))
   }
 
   var PromisePoolEvent = function (target, type, data) {
@@ -92,8 +101,8 @@
     this._concurrency = concurrency
     this._options = options || {}
     this._options.promise = this._options.promise || Promise
-    this._producer = toProducer(source, this._options.promise)
-    this._producerDone = false
+    this._iterator = toIterator(source, this._options.promise)
+    this._done = false
     this._size = 0
     this._promise = null
     this._callbacks = null
@@ -185,17 +194,16 @@
   }
 
   PromisePool.prototype._proceed = function () {
-    if (!this._producerDone) {
-      var promise
-      while (this._size < this._concurrency && (promise = this._producer())) {
+    if (!this._done) {
+      var result = null
+      while (this._size < this._concurrency &&
+          !(result = this._iterator.next()).done) {
         this._size++
-        this._trackPromise(promise)
+        this._trackPromise(result.value)
       }
-      if (!promise) {
-        this._producerDone = true
-      }
+      this._done = (result === null || !!result.done)
     }
-    if (this._producerDone && this._size === 0) {
+    if (this._done && this._size === 0) {
       this._settle()
     }
   }

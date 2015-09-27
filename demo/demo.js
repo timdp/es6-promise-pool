@@ -83,7 +83,7 @@
     }
   }
 
-  var demos = ['function']
+  var demos = ['function', 'iterator']
   if (supportsGenerators()) {
     demos.push('generator')
   } else {

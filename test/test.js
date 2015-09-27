@@ -99,12 +99,25 @@
         return expect(poolPromise).to.be.fulfilled
       })
 
+      it('accepts an iterator as the producer', function () {
+        var called = false
+        var iterator = {
+          next: function () {
+            if (called) {
+              return {done: true}
+            }
+            called = true
+            return {value: Promise.resolve()}
+          }
+        }
+        var poolPromise = new PromisePool(iterator, 1).start()
+        return expect(poolPromise).to.be.fulfilled
+      })
+
       if (supportsGenerators) {
         var gen = eval('' + // eslint-disable-line no-eval
-          '(function* g() {' +
-          'yield new Promise(function(resolve, reject) {' +
-          'resolve();' +
-          '});' +
+          '(function * g() {' +
+          '  yield Promise.resolve()' +
           '})')
         it('accepts a generator as the producer', function () {
           var poolPromise = new PromisePool(gen, 1).start()
