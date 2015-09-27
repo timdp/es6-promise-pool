@@ -1,9 +1,10 @@
 /* global define */
 
 (function (root, factory) {
+  /* istanbul ignore if */
   if (typeof define === 'function' && define.amd) {
     define([], factory)
-  } else if (typeof exports === 'object') {
+  } else /* istanbul ignore else */ if (typeof exports === 'object') {
     module.exports = factory()
   } else {
     root.PromisePool = factory()
@@ -75,6 +76,7 @@
       if (typeof obj.next === 'function') {
         return obj
       }
+      /* istanbul ignore else */
       if (typeof obj.then === 'function') {
         return promiseToIterator(obj)
       }
