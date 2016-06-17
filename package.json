@@ -31,16 +31,16 @@
   "devDependencies": {
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
-    "console-stamp": "^0.1.6",
+    "console-stamp": "^0.2.2",
     "coveralls": "^2.11.4",
     "es6-promise": "^3.0.2",
-    "istanbul": "^0.3.17",
+    "istanbul": "^0.4.3",
     "mocha": "^2.2.5",
-    "mocha-lcov-reporter": "0.0.2",
-    "mocha-phantomjs": "^3.6.0",
-    "phantomjs": "1.9.7-15",
-    "pinkie": "^1.0.0",
-    "standard": "^5.1.0"
+    "mocha-lcov-reporter": "^1.2.0",
+    "mocha-phantomjs": "^4.0.2",
+    "phantomjs": "^2.1.7",
+    "pinkie": "^2.0.4",
+    "standard": "^7.1.2"
   },
   "engines": {
     "node": ">=0.10.0"
