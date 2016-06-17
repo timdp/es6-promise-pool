@@ -18,6 +18,8 @@ test_script:
 cache:
   - node_modules -> package.json
   - '%APPDATA%\\npm-cache'
+matrix:
+  fast_finish: true
 notifications:
   - provider: GitHubPullRequest
     on_build_success: true
