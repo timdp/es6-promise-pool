@@ -16,7 +16,7 @@ test_script:
   - npm --version
   - cmd: npm test --no-color
 cache:
-  - node_modules
+  - node_modules -> package.json
   - '%APPDATA%\\npm-cache'
 notifications:
   - provider: GitHubPullRequest
