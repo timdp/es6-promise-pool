@@ -46,11 +46,10 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "npm run standard && npm run mocha",
+    "test": "npm run standard && npm run coverage",
     "standard": "node node_modules/standard/bin/cmd.js",
-    "mocha": "node --harmony node_modules/mocha/bin/_mocha",
-    "cover": "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec",
-    "coveralls": "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && node node_modules/coveralls/bin/coveralls.js < coverage/lcov.info && rm -rf coverage"
+    "coverage": "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec && node node_modules/istanbul/lib/cli.js check-coverage",
+    "coveralls": "node node_modules/coveralls/bin/coveralls.js <coverage/lcov.info"
   },
   "files": [
     "es6-promise-pool.js"
