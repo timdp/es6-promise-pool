@@ -1,5 +1,3 @@
-/* global describe, it */
-
 (function (global) {
   'use strict'
 
