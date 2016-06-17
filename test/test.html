@@ -8,6 +8,9 @@
 <script src="../node_modules/chai/chai.js"></script>
 <script src="../node_modules/chai-as-promised/lib/chai-as-promised.js"></script>
 <script>mocha.setup('bdd')</script>
+<script src="../node_modules/bluebird/js/browser/bluebird.core.js"></script>
+<script>window.Bluebird = window.Promise.noConflict()</script>
+<script src="../node_modules/es6-promise/dist/es6-promise.js"></script>
 <script src="../es6-promise-pool.js"></script>
 <script src="test.js"></script>
 </head>

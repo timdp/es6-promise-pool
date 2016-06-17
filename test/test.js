@@ -3,23 +3,22 @@
 (function (global) {
   'use strict'
 
-  if (typeof exports === 'object') {
-    require('es6-promise').polyfill()
-  }
-
-  var PromisePool, chai, expect, PinkiePromise
+  var PromisePool, ES6Promise, Bluebird, chai, expect
   if (typeof exports === 'object') {
     PromisePool = require('../')
     chai = require('chai')
     chai.use(require('chai-as-promised'))
-    PinkiePromise = require('pinkie')
+    ES6Promise = require('es6-promise')
+    Bluebird = require('bluebird')
   } else {
     PromisePool = global.PromisePool
     chai = global.chai
-    // TODO Load browserified pinkie
-    PinkiePromise = null
+    ES6Promise = global.ES6Promise
+    Bluebird = global.Bluebird
   }
   expect = chai.expect
+
+  ES6Promise.polyfill()
 
   var supportsGenerators = (function () {
     try {
@@ -151,13 +150,11 @@
         return expect(poolPromise).to.be.an.instanceof(Promise)
       })
 
-      if (PinkiePromise) {
-        it('returns a custom promise', function () {
-          var options = {promise: PinkiePromise}
-          var poolPromise = new PromisePool('test', 1, options).start()
-          return expect(poolPromise).to.be.an.instanceof(PinkiePromise)
-        })
-      }
+      it('returns a custom promise', function () {
+        var options = {promise: Bluebird}
+        var poolPromise = new PromisePool('test', 1, options).start()
+        return expect(poolPromise).to.be.an.instanceof(Bluebird)
+      })
 
       it('throttles', function () {
         var maxPoolSize = 0
