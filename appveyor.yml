@@ -16,4 +16,7 @@ test_script:
   - node --version
   - npm --version
   - cmd: npm test --no-color
+cache:
+  - node_modules
+  - '%APPDATA%\\npm-cache'
 build: off
