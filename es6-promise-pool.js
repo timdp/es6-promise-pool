@@ -1,10 +1,10 @@
 /* global define */
 
 (function (root, factory) {
-  /* istanbul ignore if */
+  /* istanbul ignore next */
   if (typeof define === 'function' && define.amd) {
     define([], factory)
-  } else /* istanbul ignore else */ if (typeof exports === 'object') {
+  } else if (typeof exports === 'object') {
     module.exports = factory()
   } else {
     root.PromisePool = factory()
