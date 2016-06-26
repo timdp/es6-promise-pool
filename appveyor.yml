@@ -17,7 +17,7 @@ test_script:
   - cmd: npm test --no-color
 cache:
   - node_modules -> package.json
-  - '%APPDATA%\\npm-cache'
+  - '%APPDATA%\\npm-cache' -> package.json
 skip_tags: true
 matrix:
   fast_finish: true
