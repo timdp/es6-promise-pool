@@ -155,7 +155,7 @@ pool.addEventListener('fulfilled', function (event) {
   // - target:    the PromisePool itself
   // - data:
   //   - promise: the Promise that got fulfilled
-  //   - result:  the result of that Promise.
+  //   - result:  the result of that Promise
   console.log('Fulfilled: ' + event.data.result)
 })
 
@@ -164,7 +164,7 @@ pool.addEventListener('rejected', function (event) {
   // - target:    the PromisePool itself
   // - data:
   //   - promise: the Promise that got rejected
-  //   - error:   the Error for the rejection.
+  //   - error:   the Error for the rejection
   console.log('Rejected: ' + event.data.error.message)
 })
 
