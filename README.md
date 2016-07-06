@@ -194,7 +194,7 @@ var pool = new PromisePool(promiseProducer, concurrency, {promise: ES6Promise})
 - Vilic Vane's [Promise Pool](https://github.com/vilic/promise-pool) offers a
   similar API.
 - [Bluebird](https://github.com/petkaantonov/bluebird) includes
-  [`Promise.map()`](https://github.com/petkaantonov/bluebird/blob/master/API.md#mapfunction-mapper--object-options---promise),
+  [`Promise.map()`](http://bluebirdjs.com/docs/api/promise.map.html),
   which takes a `concurrency` option.
 - Similarly, [λ (a.k.a. contra)](https://github.com/bevacqua/contra) has
   [`λ.concurrent()`](https://github.com/bevacqua/contra#λconcurrenttasks-cap-done)
