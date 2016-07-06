@@ -160,10 +160,8 @@
         var pool = new PromisePool(function () {
           if (cnt++ < 10) {
             return new Promise(function (resolve, reject) {
-              setTimeout(function () {
-                maxPoolSize = Math.max(maxPoolSize, pool.size())
-                resolve()
-              }, 0)
+              maxPoolSize = Math.max(maxPoolSize, pool.size())
+              resolve()
             })
           } else {
             return null
@@ -244,7 +242,7 @@
                 pool.concurrency(5)
                 size = pool.size()
               }
-              setTimeout(resolve, 0)
+              resolve()
             })
           } else {
             return null
@@ -383,9 +381,7 @@
               })
             case 1:
               return new Promise(function (resolve, reject) {
-                setTimeout(function () {
-                  resolve()
-                }, 0)
+                resolve()
               })
             default:
               return null
@@ -412,9 +408,7 @@
               })
             case 1:
               return new Promise(function (resolve, reject) {
-                setTimeout(function () {
-                  reject(new Error('test 2'))
-                }, 0)
+                reject(new Error('test 2'))
               })
             default:
               return null
@@ -436,9 +430,7 @@
         var arg = null
         var res = 'test'
         var prom = new Promise(function (resolve, reject) {
-          setTimeout(function () {
-            resolve(res)
-          }, 0)
+          resolve(res)
         })
         var called = false
         var pool = new PromisePool(function () {
@@ -470,9 +462,7 @@
         var arg = null
         var err = new Error('test')
         var prom = new Promise(function (resolve, reject) {
-          setTimeout(function () {
-            reject(err)
-          }, 0)
+          reject(err)
         })
         var called = false
         var pool = new PromisePool(function () {
