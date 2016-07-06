@@ -113,7 +113,7 @@
 
       if (supportsGenerators) {
         var gen = eval('' + // eslint-disable-line no-eval
-          '(function * g() {' +
+          '(function * g () {' +
           '  yield Promise.resolve()' +
           '})')
         it('accepts a generator as the producer', function () {
