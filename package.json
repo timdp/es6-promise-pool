@@ -36,7 +36,7 @@
     "console-stamp": "^0.2.2",
     "coveralls": "^2.11.4",
     "es6-promise": "^3.0.2",
-    "istanbul": "^0.4.3",
+    "istanbul": "^0.4.5",
     "mocha": "^3.0.0",
     "mocha-lcov-reporter": "^1.2.0",
     "mocha-phantomjs": "^4.0.2",
