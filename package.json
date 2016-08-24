@@ -41,7 +41,7 @@
     "mocha-lcov-reporter": "^1.2.0",
     "mocha-phantomjs": "^4.0.2",
     "phantomjs-prebuilt": "^2.1.7",
-    "standard": "^7.1.2"
+    "standard": "^8.0.0"
   },
   "engines": {
     "node": ">=0.10.0"
