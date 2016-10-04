@@ -35,7 +35,7 @@
     "chai-as-promised": "^5.3.0",
     "console-stamp": "^0.2.2",
     "coveralls": "^2.11.12",
-    "es6-promise": "^3.2.1",
+    "es6-promise": "^4.0.5",
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
     "mocha-lcov-reporter": "^1.2.0",
