@@ -44,7 +44,7 @@
     "standard": "^8.0.0"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">= 4"
   },
   "scripts": {
     "test": "npm run standard && npm run coverage",
