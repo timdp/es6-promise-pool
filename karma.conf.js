@@ -10,7 +10,7 @@ module.exports = function (config) {
       'node_modules/bluebird/js/browser/bluebird.core.js',
       'node_modules/es6-promise/dist/es6-promise.js',
       'es6-promise-pool.js',
-      'test/test.js'
+      'test.js'
     ],
     reporters: [
       'spec',

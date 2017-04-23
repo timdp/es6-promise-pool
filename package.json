@@ -55,10 +55,10 @@
   "scripts": {
     "test": "npm run test:lint && npm run test:node && npm run test:browser",
     "test:lint": "standard",
-    "test:node": "nyc mocha test/test.js",
+    "test:node": "nyc mocha test.js",
     "test:browser": "karma start",
     "test:ci": "npm run test:ci:node && npm run test:browser && npm run test:ci:report",
-    "test:ci:node": "nyc mocha --reporter mocha-junit-reporter test/test.js",
+    "test:ci:node": "nyc mocha --reporter mocha-junit-reporter test.js",
     "test:ci:report": "nyc report --reporter text-lcov | coveralls"
   },
   "files": [

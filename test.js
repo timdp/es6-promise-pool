@@ -3,7 +3,7 @@
 
   var PromisePool, ES6Promise, Bluebird, chai, expect
   if (typeof exports === 'object') {
-    PromisePool = require('../')
+    PromisePool = require('./')
     chai = require('chai')
     chai.use(require('chai-as-promised'))
     chai.use(require('dirty-chai'))
