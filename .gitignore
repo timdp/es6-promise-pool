@@ -1,9 +1,8 @@
 [Tt]humbs.db
-*.DS_Store
-
-node_modules/
+.DS_Store
 npm-debug.log
-
+node_modules/
 bower_components/
-
+test-results.xml
 coverage/
+.nyc_output/

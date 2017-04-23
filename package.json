@@ -30,35 +30,43 @@
     "node"
   ],
   "devDependencies": {
-    "bluebird": "^3.4.6",
+    "bluebird": "^3.5.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
-    "console-stamp": "^0.2.2",
-    "coveralls": "^2.11.12",
-    "es6-promise": "^4.0.5",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.0.2",
-    "mocha-lcov-reporter": "^1.2.0",
-    "mocha-phantomjs": "^4.1.0",
-    "phantomjs-prebuilt": "^2.1.12",
-    "standard": "^8.0.0"
+    "console-stamp": "^0.2.5",
+    "coveralls": "^2.13.0",
+    "dirty-chai": "^1.2.2",
+    "es6-promise": "^4.1.0",
+    "karma": "^1.6.0",
+    "karma-chai": "^0.1.0",
+    "karma-coverage": "^1.1.1",
+    "karma-mocha": "^1.3.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-spec-reporter": "0.0.31",
+    "mocha": "^3.2.0",
+    "mocha-junit-reporter": "^1.13.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^10.2.0",
+    "standard": "^10.0.2"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4"
   },
   "scripts": {
-    "test": "npm run standard && npm run coverage",
-    "standard": "node node_modules/standard/bin/cmd.js",
-    "coverage": "node --harmony node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec && node node_modules/istanbul/lib/cli.js check-coverage",
-    "coveralls": "node node_modules/coveralls/bin/coveralls.js <coverage/lcov.info"
+    "test": "npm run test:lint && npm run test:node && npm run test:browser",
+    "test:lint": "standard",
+    "test:node": "nyc mocha test/test.js",
+    "test:browser": "karma start",
+    "test:ci": "npm run test:ci:node && npm run test:browser && npm run test:ci:report",
+    "test:ci:node": "nyc mocha --reporter mocha-junit-reporter test/test.js",
+    "test:ci:report": "nyc report --reporter text-lcov | coveralls"
   },
   "files": [
-    "es6-promise-pool.js"
+    "es6-promise-pool.js",
+    "es6-promise-pool.d.ts"
   ],
   "repository": "timdp/es6-promise-pool",
-  "bugs": {
-    "url": "https://github.com/timdp/es6-promise-pool/issues"
-  },
+  "bugs": "https://github.com/timdp/es6-promise-pool/issues",
   "license": "MIT",
   "standard": {
     "ignore": [
@@ -71,7 +79,9 @@
       "before",
       "after",
       "beforeEach",
-      "afterEach"
+      "afterEach",
+      "chai",
+      "chaiAsPromised"
     ]
   }
 }

@@ -1,0 +1,10 @@
+machine:
+  environment:
+    NPM_CONFIG_PROGRESS: 'false'
+test:
+  pre:
+    - mkdir -p $CIRCLE_TEST_REPORTS/unit
+  override:
+    - npm run test:lint
+    - nvm use 4 && MOCHA_FILE=$CIRCLE_TEST_REPORTS/unit/node4.xml npm run test:unit
+    - nvm use 6 && MOCHA_FILE=$CIRCLE_TEST_REPORTS/unit/node6.xml npm run test:ci

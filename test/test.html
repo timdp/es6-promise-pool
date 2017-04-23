@@ -6,7 +6,9 @@
 <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
 <script src="../node_modules/mocha/mocha.js"></script>
 <script src="../node_modules/chai/chai.js"></script>
-<script src="../node_modules/chai-as-promised/lib/chai-as-promised.js"></script>
+<script src="../vendor/chai-as-promised.browser.js"></script>
+<script>chai.use(chaiAsPromised)</script>
+<script src="../node_modules/dirty-chai/lib/dirty-chai.js"></script>
 <script>mocha.setup('bdd')</script>
 <script src="../node_modules/bluebird/js/browser/bluebird.core.js"></script>
 <script>window.Bluebird = window.Promise.noConflict()</script>

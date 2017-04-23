@@ -6,13 +6,14 @@
     PromisePool = require('../')
     chai = require('chai')
     chai.use(require('chai-as-promised'))
+    chai.use(require('dirty-chai'))
     ES6Promise = require('es6-promise')
     Bluebird = require('bluebird')
   } else {
     PromisePool = global.PromisePool
     chai = global.chai
     ES6Promise = global.ES6Promise
-    Bluebird = global.Bluebird
+    Bluebird = Promise.noConflict()
   }
   expect = chai.expect
 
@@ -300,7 +301,7 @@
     describe('#promise()', function () {
       it('does not return a promise by default', function () {
         var pool = new PromisePool(Promise.resolve(), 3)
-        expect(pool.promise()).to.not.exist
+        expect(pool.promise()).to.not.exist()
       })
 
       it('returns a promise while working', function () {
@@ -364,7 +365,7 @@
       it('provides an Error', function () {
         var poolPromise = new PromisePool(function () {
           return new Promise(function (resolve, reject) {
-            reject()
+            reject(new Error())
           })
         }, 1).start()
         return expect(poolPromise).to.eventually.be.rejectedWith(Error)
