@@ -35,7 +35,7 @@
     "chai-as-promised": "^6.0.0",
     "console-stamp": "^0.2.5",
     "coveralls": "^2.13.0",
-    "dirty-chai": "^1.2.2",
+    "dirty-chai": "^2.0.1",
     "es6-promise": "^4.1.0",
     "karma": "^1.6.0",
     "karma-chai": "^0.1.0",
