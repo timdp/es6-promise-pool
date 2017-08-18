@@ -256,6 +256,56 @@
         return expect(sizePromise).to.eventually.equal(5)
       })
 
+      it('calls the producer again when decreasing concurrency', function () {
+        var cnt = 0
+        var iterations = 10
+        var concurrency = 3
+        var pool
+        var producer = function () {
+          if (cnt++ < iterations) {
+            return new Promise(function (resolve, reject) {
+              setTimeout(function () {
+                pool.concurrency(concurrency - 1)
+                resolve()
+              }, 0)
+            })
+          } else {
+            return null
+          }
+        }
+        pool = new PromisePool(producer, concurrency)
+        var poolPromise = pool.start()
+        var cntPromise = poolPromise.then(function () {
+          return cnt
+        })
+        return expect(cntPromise).to.eventually.equal(iterations + 1)
+      })
+
+      it('calls the producer again when increasing concurrency', function () {
+        var cnt = 0
+        var iterations = 10
+        var concurrency = 3
+        var pool
+        var producer = function () {
+          if (cnt++ < iterations) {
+            return new Promise(function (resolve, reject) {
+              setTimeout(function () {
+                pool.concurrency(concurrency + 1)
+                resolve()
+              }, 0)
+            })
+          } else {
+            return null
+          }
+        }
+        pool = new PromisePool(producer, concurrency)
+        var poolPromise = pool.start()
+        var cntPromise = poolPromise.then(function () {
+          return cnt
+        })
+        return expect(cntPromise).to.eventually.equal(iterations + 1)
+      })
+
       it('does not change the pool size after fulfilment', function () {
         var pool = new PromisePool(Promise.resolve(), 3)
         var poolPromise = pool.start()

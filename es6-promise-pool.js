@@ -195,7 +195,7 @@
 
   PromisePool.prototype._proceed = function () {
     if (!this._done) {
-      var result = null
+      var result = { done: false }
       while (this._size < this._concurrency &&
           !(result = this._iterator.next()).done) {
         this._size++
