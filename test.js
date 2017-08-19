@@ -260,12 +260,16 @@
         var cnt = 0
         var iterations = 10
         var concurrency = 3
+        var concurrencyChanged = false
         var pool
         var producer = function () {
           if (cnt++ < iterations) {
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
-                pool.concurrency(concurrency - 1)
+                if (!concurrencyChanged) {
+                  pool.concurrency(concurrency + 1)
+                  concurrencyChanged = true
+                }
                 resolve()
               }, 0)
             })
@@ -285,12 +289,16 @@
         var cnt = 0
         var iterations = 10
         var concurrency = 3
+        var concurrencyChanged = false
         var pool
         var producer = function () {
           if (cnt++ < iterations) {
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
-                pool.concurrency(concurrency + 1)
+                if (!concurrencyChanged) {
+                  pool.concurrency(concurrency + 1)
+                  concurrencyChanged = true
+                }
                 resolve()
               }, 0)
             })
