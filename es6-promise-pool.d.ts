@@ -15,4 +15,7 @@ declare class PromisePool<A> extends EventTarget {
   start(): PromiseLike<A>
 }
 
-export default PromisePool
+declare module PromisePool {
+}
+
+export = PromisePool;
