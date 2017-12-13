@@ -104,6 +104,7 @@
     this._iterator = toIterator(source, this._options.promise)
     this._done = false
     this._size = 0
+    this._results = []
     this._promise = null
     this._callbacks = null
   }
@@ -153,14 +154,16 @@
     if (error) {
       this._callbacks.reject(error)
     } else {
-      this._callbacks.resolve()
+      this._callbacks.resolve(this._results)
     }
     this._promise = null
     this._callbacks = null
+    this._results = []
   }
 
   PromisePool.prototype._onPooledPromiseFulfilled = function (promise, result) {
     this._size--
+    this._results.push(result)
     if (this.active()) {
       this._fireEvent('fulfilled', {
         promise: promise,
