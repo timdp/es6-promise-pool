@@ -36,7 +36,7 @@
     "console-stamp": "^0.2.5",
     "coveralls": "^2.13.0",
     "dirty-chai": "^1.2.2",
-    "es6-promise": "^4.1.0",
+    "es6-promise": "4.1.1",
     "karma": "^1.6.0",
     "karma-chai": "^0.1.0",
     "karma-coverage": "^1.1.1",
