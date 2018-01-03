@@ -11,8 +11,8 @@ declare class PromisePool<A> extends EventTarget {
   concurrency(concurrency: number): number
   size(): number
   active(): boolean
-  promise(): PromiseLike<A>
-  start(): PromiseLike<A>
+  promise(): Promise<A>
+  start(): Promise<A>
 }
 
 export default PromisePool
