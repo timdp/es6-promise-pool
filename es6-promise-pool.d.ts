@@ -2,7 +2,7 @@ interface Options<A> {
   promise?: PromiseLike<A>
 }
 
-declare class PromisePool<A> extends EventTarget {
+declare class PromisePool<A> {
   constructor(
     source: () => PromiseLike<A>|void,
     concurrency: number,
