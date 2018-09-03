@@ -29,7 +29,7 @@
     "node"
   ],
   "devDependencies": {
-    "bluebird": "^3.5.0",
+    "bluebird": "3.5.1",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "console-stamp": "^0.2.5",
